@@ -98,10 +98,25 @@ const handleSpicyChange = (level) => {
     // Redirect to checkout
     const result = await stripe.redirectToCheckout({
         sessionId: session.id // Use sessionId from the response
+        
     });
+    const orderData = {
+      userId: localStorage.getItem('userId'), // Assuming you have the userId stored
+      items: products,
+      amount: getTotalCartAmount() + 2, // Including delivery fee
+      address: {}, // Add address data here
+    };
+    await submitOrder(orderData, true);
     
     if (result.error) {
         console.log(result.error); // Log the error if there's one
+        const orderData = {
+          userId: localStorage.getItem('userId'), // Assuming you have the userId stored
+          items: products,
+          amount: getTotalCartAmount() + 2, // Including delivery fee
+          address: {}, // Add address data here
+        };
+        await submitOrder(orderData, false);
     }
 };
 
@@ -214,7 +229,7 @@ const onSamsungPayButtonClicked = () => {
     orderNumber: "sAmPle0n1y123", 
     merchant: {
       name: "Virtual Shop",
-      url: url, // Your service domain
+      url: "https://us-online.stg.mpay.samsung.com/gsmpi-api/v1/transactions", // Your service domain
       countryCode: "US"
     },
     amount: {
@@ -330,6 +345,22 @@ const makeSamsungPayment = async () => {
     console.error("Error making Samsung Pay payment:", error);
   }
 };
+
+ // New function to submit order
+ const submitOrder = async (orderData, payment) => {
+  const token = localStorage.getItem('token'); // Get the token from localStorage
+  try {
+    let response = await axios.post(url + '/api/order/place', { ...orderData, payment }, {
+      headers: { token } // Include token in headers
+    });
+    console.log("Order submitted successfully:", response.data);
+    navigate('/order'); // Redirect to order confirmation page
+  } catch (error) {
+    console.error("Error submitting order:", error);
+  }
+};
+
+
 
 
 
@@ -521,8 +552,9 @@ const makeSamsungPayment = async () => {
             onClick={makeBinancePayment}
             // onClick={()=> navigate('/order')}
           >PAY WITH BINANCE</button>
+          
 
-<div align="center" id="samsungpay-container" ref={samsungPayContainerRef}></div> {/* Samsung Pay Button */}
+  <div align="center" id="samsungpay-container" ref={samsungPayContainerRef}></div> {/* Samsung Pay Button */}
 
         </div>
       </div>

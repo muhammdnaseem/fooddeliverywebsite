@@ -38,6 +38,7 @@ const LoginPopup = ({setShowLogin}) => {
             setShowLogin(false);
         }else{
             alert(response.data.message);
+            console.log(response);
         }
    }
 

@@ -1,53 +1,84 @@
-.header{
+.header {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Align contents and image */
+    align-items: center; /* Center items vertically */
     height: 34vw;
     margin: 30px auto;
-    background: url('/header_img.png') no-repeat;
-    background-size: contain;
     position: relative;
+    flex-wrap: wrap; /* Allow wrapping for responsive design */
 }
 
-.header-contents{
-    position: absolute;
+.header-contents {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 1.5vw;
     max-width: 50%;
-    bottom: 10%;
-    left: 6vw;
     animation: fadeIn 3s;
 }
 
-.header-contents h2{
+.header-contents h2 {
     font-weight: 500;
-    color: white;
-    font-size:max(4.5vw, 22px);
+    color: black;
+    font-size: max(4.5vw, 22px);
 }
 
 .header-contents p {
-    color: white;
+    color: black;
     font-size: 1vw;
 }
 
-.header-contents button{
+.header-contents button {
     border: none;
-    color: #747474;
+    color: black;
     font-weight: 500;
     padding: 1vw 2.3vw;
-    background-color: white;
-    font-size: max(1vw,13px);
+    background-color: yellow;
+    font-size: max(1vw, 13px);
     border-radius: 50px;
+    border: 1px solid black;
 }
 
-@media (max-width:1050px){
-.header-contents{
-    max-width: 45%;
-}
+.header-image {
+    width: 200px; /* Adjust width and height as needed */
+    height: 200px;
+    flex-shrink: 0; /* Prevent image from shrinking */
 }
 
-@media (max-width:750px){
-    
-    .header-contents{
+/* New CSS for menu items container */
+.header-menu-items {
+    display: flex; /* Layout menu items in a row */
+    gap: 10px; /* Space between items */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin-left: 20px; /* Add margin to separate from header contents */
+}
+
+.header-menu-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s; /* Optional hover effect */
+}
+
+.header-menu-list-item img {
+    width: 50px; /* Set size for menu item images */
+    height: auto;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1050px) {
+    .header-contents {
+        max-width: 45%;
+    }
+
+    .header-menu-items {
+        margin-left: 10px; /* Adjust margin for smaller screens */
+    }
+}
+
+@media (max-width: 750px) {
+    .header-contents {
         max-width: 65%;
     }
 
@@ -55,7 +86,16 @@
         display: none;
     }
 
-    .header-contents button{
+    .header-contents button {
         padding: 2vw 4vw;
+    }
+
+    .header-image {
+        display: none; /* Optionally hide image on smaller screens */
+    }
+
+    .header-menu-items {
+        flex-direction: column; /* Stack menu items on smaller screens */
+        align-items: center; /* Center items */
     }
 }

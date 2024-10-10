@@ -1,0 +1,26 @@
+.deal {
+    height: 3vw;
+    margin: 30px -10%;
+    padding: 5px;
+    color: white;
+    background-color: red;
+    width: 120%;
+    position: relative;
+    display: flex;
+    overflow: hidden; /* Hide overflow to ensure text moves smoothly */
+}
+
+.deal-text {
+    white-space: nowrap; /* Prevent text from wrapping */
+    display: inline-block; /* Ensure each text span is treated as a block */
+    animation: move 10s linear infinite; /* Animation for movement */
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(100%); /* Start off-screen to the right */
+    }
+    100% {
+        transform: translateX(-100%); /* Move off-screen to the left */
+    }
+}

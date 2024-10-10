@@ -8,6 +8,9 @@ import Footer from './components/Footer/Footer'
 import LoginPopup from './components/LoginPopup/LoginPopup'
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
+import Products from './pages/Products/Products'
+import Sucess from './pages/Home/Sucess'
+import Profile from './pages/Profile/Profile'
 
 const App = () => {
 
@@ -19,9 +22,12 @@ const App = () => {
       <Navbar setShowLogin={setShowLogin}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/sucess' element={<Sucess/>}/>
+        <Route path='/products' element={<Products/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/order' element={<PlaceOrder/>}/>
         <Route path='/verify' element={<Verify/>}/>
+        <Route path='/profile' element={<Profile/>}/>
         <Route path='/myorders' element={<MyOrders/>}/>
       </Routes>
     </div>

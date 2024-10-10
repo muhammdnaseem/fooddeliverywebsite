@@ -1,9 +1,14 @@
 import express from 'express'
-import { loginUser, registerUser } from '../controllers/userController.js'
+import { loginUser, registerUser, sendVerificationEmail, userDetails, userUpdate } from '../controllers/userController.js'
+import authMiddleware from './../middleware/auth.js';
 
 const userRouter = express.Router();
 
 userRouter.post('/register', registerUser)
+userRouter.get('/sendEmail', sendVerificationEmail)
 userRouter.post('/login', loginUser)
+userRouter.post('/details', authMiddleware, userDetails)
+userRouter.put('/updateprofile', authMiddleware, userUpdate)
+
 
 export default userRouter;

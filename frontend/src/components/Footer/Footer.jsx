@@ -1,15 +1,17 @@
 import React from 'react'
 import './Footer.css'
 import { assets } from '../../assets/assets'
+import { menu_list } from '../../assets/assets'
 
 const Footer = () => {
   return (
     <div className='footer' id='footer'>
+        <img src={assets.logo} className='footer-logo' alt="" />
         <div className="footer-content">
+        
             <div className="footer-content-left">
-                <img src={assets.logo} alt="" />
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum in, beatae dolorem non optio cupiditate, quam sunt dicta dolores minima exercitationem ducimus totam aut asperiores inventore harum laudantium. Distinctio, libero.</p>
-                <div className="footer-social-icons">
+                
+                  <div className="footer-social-icons">
                     <img src={assets.facebook_icon} alt="" />
                     <img src={assets.twitter_icon} alt="" />
                     <img src={assets.linkedin_icon} alt="" />
@@ -25,17 +27,23 @@ const Footer = () => {
                 </ul>
             </div>
             <div className="footer-content-right">
-                <h2>GET IN TOUCH</h2>
-                <ul>
-                    <li>+94 765489545</li>
-                    <li>dulanjalisenarathna93@gmail.com</li>
-                </ul>
+                <h2>CATEGORIES</h2>
+                {menu_list.map((item,index)=>{
+                return (
+                    <ul key={index}>
+                        
+                        <li>{item.menu_name}</li>
+                        
+                    </ul>
+                )
+            })}
+               
             </div>
            
         </div>
         <hr />
         <p className="footer-copyright">
-            Copyright 2024 &copy; Dulanjali - All Right Reserved.
+            Copyright 2024 &copy; HEN n Bun - All Right Reserved.
         </p>
     </div>
   )

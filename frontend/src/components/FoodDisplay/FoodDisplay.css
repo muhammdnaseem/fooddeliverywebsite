@@ -14,3 +14,26 @@
     gap: 30px;
     row-gap: 50px;
 }
+
+button {
+    border: none;
+    color: black;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: transparent;
+    font-size: max(1vw, 13px);
+    border-radius: 10px;
+    border: 1px solid black;
+    margin: 5px 5px;
+}
+
+button.active {
+    border: none;
+    color: black;
+    font-weight: 500;
+    padding: 1vw 2.3vw;
+    background-color: yellow;
+    font-size: max(1vw, 13px);
+    border-radius: 10px;
+    border: 1px solid black;
+}

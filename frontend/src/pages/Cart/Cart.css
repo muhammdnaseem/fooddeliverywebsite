@@ -104,3 +104,86 @@
         justify-content: start;
     }
 }
+
+
+/* .extra-item{
+    display: flex;
+}
+.extra-item-image{
+    width: 80px;
+    height: 80px;
+}
+
+.extra-item-button{
+    padding: 5px 5px;
+    height: 40px;
+} */
+
+
+
+.cart-side-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Left (Drinks), Middle (Spicy level), Right (Extras) */
+    gap: 20px;
+    margin-top: 50px;
+  }
+  
+  .drinks-items-section,
+  .extra-items-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .spicy-level-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .spicy-level-options label {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .spicy-level-options input {
+    margin-right: 10px;
+  }
+  
+  .drink-item,
+  .extra-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  
+  .drink-item-image,
+  .extra-item-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+  }
+  
+  .drink-item-button,
+  .extra-item-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .drink-item-button:hover,
+  .extra-item-button:hover {
+    background-color: #0056b3;
+  }
+  

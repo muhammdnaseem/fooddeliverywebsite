@@ -1,66 +1,32 @@
 .navbar{
-    padding: 20px 0px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    height: 70px;
 }
 
 .navbar .logo{
     width: 150px;
 }
 
-.navbar-menu{
-    display: flex;
-    list-style: none;
-    gap: 20px;
-    color: #49557e;
-    font-size: 18px;
-}
 
-.navbar-right{
-    display: flex;
-    align-items: center;
-    gap: 40px;
-}
 
-.navbar button{
-    background: transparent;
-    font-size: 16px;
-    color: black;
-    font-weight: bold;
-    border: 1px solid black;
-    padding: 10px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: .3s;
-}
 
-.navbar button:hover {
-background-color: #fff4f2;
-}
+
+
+
 
 .navbar .active{
-    padding-bottom: 2px;
+    padding-bottom: 1px;
     border-bottom: 2px solid #49557e;
 }
+
+
 
 .navbar li{
     cursor: pointer;
 }
 
 
-.navbar-whatsapp-icon{
-    position: relative;
-    width: 50px;
-    height: 50px;
-}
 
 
-.navbar-search-icon{
-    position: relative;
-    max-width: 70px;
-    max-height: 70px;
-}
 
 .navbar-search-icon .dot{
     position: absolute;
@@ -109,27 +75,16 @@ background-color: #fff4f2;
     gap: 10px;
     cursor: pointer;
 }
+
+
 @media (max-width:1050px){
     .navbar .logo{
         width: 140px;
     }
 
-    .navbar-menu{
-        gap: 20px;
-        font-size: 17px;
-    }
+   
 
-    .navbar-right{
-        gap: 30px;
-    }
-
-    .navbar-right img{
-        width: 22px;
-    }
-
-    .navbar-right button{
-        padding: 8px 25px;
-    }
+ 
 }
 
 @media (max-width:900px){
@@ -137,27 +92,85 @@ background-color: #fff4f2;
         width: 120px;
     }
 
-    .navbar-menu{
-        gap: 15px;
-        font-size: 16px;
-    }
 
-    .navbar-right{
-        gap: 20px;
-    }
+    
 
-    .navbar-right img{
-        width: 20px;
-    }
-
-    .navbar-right button{
-        padding: 7px 20px;
-        font-size: 15px;
-    }
+    
 }
 
 @media (max-width:750px){
     .navbar-menu{
         display: none;
     } 
+}
+
+.icon{
+    padding: 0 10px;
+}
+
+/* Add padding to the nav links */
+.navbar .nav-link {
+    padding: 10px 30px !important; /* Adjust padding to cover area */
+    display: inline-block; /* Ensures the padding applies properly */
+    color: #000; /* Default color for links */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.navbar .nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Add hover effect */
+    border-radius: 5px; /* Optional: add rounding for better aesthetics */
+}
+
+.navbar .active {
+    padding-bottom: 1px;
+    border-bottom: 2px solid #49557e;
+}
+
+/* Add padding and border for dropdown links */
+.navbar .nav-dropdown-link {
+    padding: 10px 15px;
+    display: inline-block;
+    color: #000;
+}
+
+.navbar .nav-dropdown-link:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Icons Group for Mobile */
+.mobile-icons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 0 0 0 -15%;
+  
+}
+
+.menu-button{
+    margin: -2% 10% 0 0;
+    color: #f8c400;
+}
+.menu-button.active{
+    background-color: #f8c400;
+}
+
+@media (max-width: 750px) {
+    .navbar-menu {
+        display: none;
+    } 
+
+    .logo{
+        margin-top: -10%;
+        margin-left: -10%;
+    }
+    .desktop-icons{
+        display: none !important;
+    }
+
+    #responsive-navbar-nav{
+        z-index: 2;
+        background: #f8c400;
+        color: white;
+    }
 }

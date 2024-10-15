@@ -1,0 +1,59 @@
+/* Search Container */
+.custom-search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+   
+  }
+  
+  /* Search Bar */
+  .custom-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #ffc107; /* Yellow background */
+    border-radius: 30px;
+    padding: 10px 20px;
+    width: 60%; /* Adjust as needed */
+    max-width: 500px;
+    height: 50px;
+   
+  }
+  
+  /* Search Icon */
+  .search-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: white;
+  }
+  
+  /* Input Field */
+  .custom-search-bar input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+    margin-top: 4.5%;
+  }
+  
+  /* Placeholder Text */
+  .custom-search-bar input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+
+  /* Mobile Adjustments */
+@media (max-width: 768px) {
+    /* Input Field */
+  .custom-search-bar input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    color: white;
+    font-size: 16px;
+    margin-top: 8.5%;
+  }
+}

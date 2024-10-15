@@ -1,0 +1,275 @@
+.cart-container {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .cart-description {
+    color: gray;
+    margin-bottom: 20px;
+  }
+  
+  .size-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .size-button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+  }
+  
+  .size-button.active {
+    background-color: #ffcc00;
+  }
+  
+  .dip-options, .spicy-options, .addons-section, .drinks-section {
+    margin-top: 20px;
+  }
+  
+  .special-instructions textarea {
+    width: 100%;
+    height: 80px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .addons-drinks {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .related-items {
+    margin-top: 30px;
+  }
+  
+  .related-item-image {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .cart-total {
+    margin-top: 30px;
+    text-align: center;
+  }
+  
+  .checkout-button {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .quantity-btn{
+    background-color: #ffcc00;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+  }
+  .item-name{
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .item-quantity-counter{
+    position: relative;
+    
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 0px;
+    border-radius: 50px;
+    background-color: white;
+  }
+  .item-price{
+    margin: 0;
+    padding: 0;
+  }
+  .item-desc{
+    margin: 0;
+    padding: 0;
+  }
+
+  .cart-item-image{
+    height: 300px;
+  }
+  .size-selection {
+    background-color: #ffcc00;
+    padding: 2rem;
+  }
+  
+  .size-option {
+    position: relative;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  /* Hide the default radio input */
+  .custom-radio {
+    display: none;
+  }
+  
+  /* Custom label for the radio button */
+  .custom-radio-label {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    padding-top: 1rem;
+  }
+  
+  /* Image styling */
+  .size-item-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: border 0.3s ease;
+  }
+  
+  /* Empty circle for radio button */
+  .custom-radio-label::before {
+    content: '';
+    position: absolute;
+    top: 5px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    width: 20px; /* Adjust size */
+    height: 20px; /* Adjust size */
+    border: 1px solid black; /* Border for the circle */
+    border-radius: 50%; /* Make it circular */
+    background-color: white; /* Background for empty circle */
+  }
+  
+  /* Tick mark on checked radio */
+  .custom-radio:checked + .custom-radio-label::before {
+    content: '✓'; /* Display tick */
+    font-size: 18px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  /* Visual cue on selection */
+  .custom-radio:checked + .custom-radio-label .size-item-image {
+    border: 2px solid green;
+    transition: 0.3s;
+  }
+  
+  .size-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+
+  /* AddExtra.css */
+.extra-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .extra-custom-radio {
+    margin-right: 10px; /* Space between radio button and label */
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ffcc00;
+  }
+  
+  .extra-custom-radio-label {
+    display: flex;
+    justify-content: space-between; /* Stretch label content across */
+    align-items: center;
+    width: 100%; /* Ensure the label takes full width of the container */
+  }
+  
+  .size-label {
+    flex-grow: 1; /* Allow the label text to grow and center within the space */
+    text-align: center; /* Ensure label text is centered within its container */
+  }
+
+  .spicy-level-options {
+    /* Align the title to the left */
+    text-align: left !important; /* Aligns the text to the left */
+  }
+  
+  .spicy-level-container {
+    display: flex;
+    justify-content: space-between; /* Adds equal space between options */
+    align-items: center;
+    width: 100%; /* Make sure it takes full width */
+  }
+  
+  .spicy-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .special-instructions {
+    margin-top: 20px; /* Space above the instructions section */
+  }
+  
+  .special-instructions h3 {
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .special-instructions-input {
+    width: 100%; /* Make the textarea full width */
+    padding: 10px; /* Add some padding */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 5px; /* Rounded corners */
+    resize: none; /* Prevent resizing */
+  }
+  .addons-drinks-section {
+    margin-top: 20px; /* Space above this section */
+  }
+  
+  .addons-column, .drinks-column {
+    padding: 10px; /* Padding for the columns */
+  }
+  
+  .addons-radio, .drinks-radio {
+    margin-right: 25px; /* Space between radio and label */
+  }
+  .related-items-section {
+    margin-top: 20px; /* Space above this section */
+  }
+  
+  .related-item {
+    text-align: center; /* Center items */
+    margin-bottom: 15px; /* Space between items */
+  }
+  
+  .view-cart-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .view-cart-button:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+  }
+  

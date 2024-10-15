@@ -103,7 +103,7 @@ const handleSpicyChange = (level) => {
     const orderData = {
       userId: localStorage.getItem('userId'), // Assuming you have the userId stored
       items: products,
-      amount: getTotalCartAmount() + 2, // Including delivery fee
+      amount: getTotalCartAmount() + 0, // Including delivery fee
       address: {}, // Add address data here
     };
     await submitOrder(orderData, true);
@@ -544,7 +544,7 @@ const makeSamsungPayment = async () => {
               <b>${(getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2).toFixed(2)}</b>
             </div>
           </div>
-          <button 
+          {/* <button 
             onClick={makePayment}
             // onClick={()=> navigate('/order')}
           >PROCEED TO CHECKOUT</button>
@@ -554,7 +554,7 @@ const makeSamsungPayment = async () => {
           >PAY WITH BINANCE</button>
           
 
-  <div align="center" id="samsungpay-container" ref={samsungPayContainerRef}></div> {/* Samsung Pay Button */}
+  <div align="center" id="samsungpay-container" ref={samsungPayContainerRef}></div>  */}
 
         </div>
       </div>

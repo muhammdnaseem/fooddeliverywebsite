@@ -38,7 +38,7 @@ const StoreContextProvider = (props) => {
         const newItemKey = `${itemId}-${newSize}`;
     
         // Move the quantity from the old size to the new size in the cartItems state
-        setCartItems((prev) => {
+        const updatedCartItems = setCartItems((prev) => {
             const newCartItems = { ...prev };
     
             // Transfer the quantity from old size to new size
@@ -69,14 +69,15 @@ const StoreContextProvider = (props) => {
     
         // Calculate subtotal for the updated item
         const itemInfo = food_list.find((product) => product._id === itemId);
-        const updatedSubtotal = itemInfo ? itemInfo.sizes.find((s) => s.size === newSize)?.price * newCartItems[newItemKey] : 0;
+        const updatedSubtotal = itemInfo ? itemInfo.sizes.find((s) => s.size === newSize)?.price * (updatedCartItems[newItemKey] || 0) : 0;
     
         console.log('Updated Subtotal for Item:', updatedSubtotal);
     
         // Update the total amount after size change
-        const updatedTotalAmount = getTotalCartAmount();
+        const updatedTotalAmount = getTotalCartAmount(); // This function should be defined to calculate the total
         console.log('Updated Total Amount:', updatedTotalAmount);
     };
+    
     
 
     const getTotalCartAmount = () => {

@@ -2,8 +2,12 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+    background-color: #FBF3D2;
 }
-
+.category {
+    flex: '0 0 auto';
+    border: 1px solid black;
+}
 .explore-menu h1{
     color: #262626;
     font-weight: 500;
@@ -18,7 +22,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 30px;
+    gap: 0px;
     text-align: center;
     margin: 20px 0px;
     overflow: scroll;
@@ -39,7 +43,7 @@
 
 .explore-menu-list-item img{
     position: relative;
-    margin-top: -50%;
+    margin-bottom: -50%;
     width: 7.5vw;
     width: 80px !important;
     height: 80px !important;
@@ -49,7 +53,7 @@
 }
 
 .explore-menu-list-item p{
-    margin-top: 10px;
+    margin-bottom: -30% !important;
     color: black;
     font-size: max(1.4vw,16px);
     cursor: pointer;
@@ -80,4 +84,48 @@
         max-width: 100%;
         font-size: 14px;
     }
+}
+.category{
+    background-color: white;
+    width: 200px;
+    height: 120px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.category-item {
+  height: 100px; /* Set a fixed height for each category item */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.category p.category-text {
+  margin-top: auto;
+  text-align: center;
+  margin-top: 80px;
+}
+
+
+.explore-menu-list .img-fluid.rounded-circle{
+   width: '100px';
+   height: '100px';
+   cursor: 'pointer';  
+   margin-bottom: '-40%';
+}
+
+@media (max-width: 992px) {
+.category{
+    background-color: white;
+    width: 150px;
+    height: 120px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+.img-fluid.rounded-circle{
+    width: '50px' !important;
+    height: '50px' !important;
+    cursor: 'pointer';  
+    margin-bottom: '-40%';
+ }
 }

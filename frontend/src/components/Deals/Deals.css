@@ -1,0 +1,233 @@
+.best-deals {
+  padding: 20px;
+}
+
+.deals-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.deal-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.deal-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Big Deal Styling */
+.first-deal .deal-card.big-deal {
+  background-color: #D43734;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0;
+  overflow: hidden;
+}
+
+.first-deal .deal-info.big-deal-info {
+  flex: 1;
+  padding: 20px;
+}
+.first-deal .deal-info.big-deal-info {
+  transform: translateX(5%);
+  clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+
+}
+
+.first-deal .deal-title {
+  font-size: 2rem;
+  color: white;
+}
+
+.first-deal .deal-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.first-deal .deal-description {
+  color: white;
+}
+
+.big-discount-badge {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  background-color: #D43734;
+  color: white;
+  width: 60px;       /* Set a fixed width for the circle */
+  height: 60px;      /* Set height to the same as width to make it a circle */
+  border-radius: 50%; /* 50% border-radius makes it a perfect circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;  /* Adjust font size for better readability */
+  line-height: 1.2;   /* Ensure proper line spacing */
+}
+
+
+
+/* Small Deal Styling */
+.small-deal {
+  display: flex;
+  height: 250px;
+  background-size: cover;
+  background-position: left;
+  position: relative;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+}
+
+/* Left side for image (50% width) */
+.deal-left-side {
+  flex: 2;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Right side for text (50% width) */
+.small-deal-info {
+  flex: 1;
+  background-color: #D43734;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50% 0 0 50%;
+}
+.small-deal-info.first-small-deal {
+  flex: 1;
+  background-color: #D43734;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10% 0 10% 10%;
+  border-top-left-radius: 10% !important;
+  
+  /* Move it downward */
+  transform: translateY(20px); /* Moves the element down */
+  
+  /* Opposite slash shape */
+  clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+}
+
+
+.cover-div{
+  flex: 1;
+  background-color: yellow;
+  text-align: center;
+  color: white;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10% 0 10% 10%;
+  border-top-left-radius: 10% !important;
+  
+  /* Move it downward */
+  transform: translateY(20px); /* Moves the element down */
+  
+  /* Opposite slash shape */
+  clip-path: polygon(0 10%, 100% 0, 100% 90%, 0% 100%);
+}
+
+
+
+.small-deal .deal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.small-deal .deal-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.small-deal .deal-product {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #f8f9fa;
+}
+
+/* Discount Badge Styling */
+.small-discount-badge {
+  position: absolute;
+  top: 10%;
+  right: 30%;
+  background-color: yellow;
+  color: black;
+  width: 60px;       /* Set a fixed width for the circle */
+  height: 60px;      /* Set height to the same as width to make it a circle */
+  border-radius: 50%; /* 50% border-radius makes it a perfect circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 0.8rem;  /* Adjust font size for better readability */
+  line-height: 1.2;   /* Ensure proper line spacing */
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .deal-card {
+    flex-direction: column;
+  }
+
+  /* Right side for text (50% width) */
+.small-deal-info {
+  flex: 1;
+  background-color: #D43734;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50% 50% 0 0;
+  margin-bottom: -20%;
+}
+
+.small-deal-info.first-small-deal{
+  flex: 1;
+  background-color: #D43734;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50% 50% 0 0;
+  margin-bottom: -20%;
+}
+
+.small-discount-badge {
+
+  top: 25%;
+  right: 30%;
+  
+}
+
+}

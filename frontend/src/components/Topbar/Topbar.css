@@ -1,0 +1,101 @@
+/* Custom yellow background for the navbar */
+.custom-navbar-bg {
+    background-color: #f8c400;
+    height: 50px;
+  }
+  
+  .topbar-left img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .topbar-left p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .navbar-contact p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .navbar-location p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .navbar-icons span {
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  /* Location icon */
+  .location-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  /* Adjustments for responsiveness */
+  @media (max-width: 768px) {
+    .navbar-contact p {
+      font-size: 14px;
+      font-weight: bold;
+    }
+  
+    .navbar-location p {
+      font-size: 14px;
+    }
+  
+    .navbar-icons img {
+      width: 18px;
+      height: 18px;
+    }
+  
+    .navbar-location img {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  .custom-navbar-bg {
+    background-color: #f8c400;
+    height: auto;
+    padding: 5px 0;
+}
+
+/* Social Icons */
+.topbar-left .icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Center Contact Text */
+.text-center p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.location-icon {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1); /* Makes the icon white */
+}
+
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .custom-navbar-bg {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .text-center p, .topbar-left span, .navbar-location p {
+        font-size: 14px;
+    }
+}

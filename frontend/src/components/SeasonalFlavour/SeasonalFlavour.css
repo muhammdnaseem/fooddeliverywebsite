@@ -1,0 +1,79 @@
+.flavour {
+  padding: 20px;
+}
+
+.flavour-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.flavour-card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.3s ease;
+}
+
+.flavour-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Big Deal Styling */
+.flavour-card.big-deal {
+  background-color: #e63946;
+  color: black;
+}
+
+.flavour-image-container {
+  position: relative;
+  flex: 1;
+}
+
+.flavour-image {
+  width: 50%;
+  height: auto;
+}
+
+.big-discount-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: yellow;
+  color: red;
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+
+
+.flavour-title {
+  font-size: 2rem;
+  color: black;
+}
+
+.flavour-description {
+  color: black;
+}
+
+.flavour-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: black;
+}
+
+.flavour-product {
+  margin: 10px 0;
+  color: #495057;
+}
+
+@media (max-width: 992px) {
+  .flavour-card {
+      flex-direction: column;
+  }
+}

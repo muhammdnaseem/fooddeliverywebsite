@@ -1,20 +1,30 @@
 .header {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Align contents and image */
     align-items: center; /* Center items vertically */
-    height: 34vw;
-    margin: 30px auto;
+    height: auto;
     position: relative;
-    flex-wrap: wrap; /* Allow wrapping for responsive design */
+    background-color: #ffd63d; /* Existing background */
+    padding: 40px 70px;
+}
+
+.header::after { /* Pseudo-element for the red corner */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 250px; /* Adjust the width for desired size */
+    height: 250px; /* Adjust the height for desired size */
+    background-color: #D43734; /* Red color */
+    border-top-left-radius: 70%; /* Optional: add some rounding */
+    z-index: 0; /* Keep it behind the header contents and image */
 }
 
 .header-contents {
-    display: flex;
+    display: flex; /* Ensure flex layout */
     flex-direction: column;
     align-items: start;
     gap: 1.5vw;
-    max-width: 50%;
     animation: fadeIn 3s;
+    z-index: 0; /* Ensure contents are above the image */
 }
 
 .header-contents h2 {
@@ -28,74 +38,130 @@
     font-size: 1vw;
 }
 
-.header-contents button {
-    border: none;
+Button.header-button {
     color: black;
     font-weight: 500;
-    padding: 1vw 2.3vw;
-    background-color: yellow;
-    font-size: max(1vw, 13px);
-    border-radius: 50px;
     border: 1px solid black;
+    border-radius: 50px;
 }
 
 .header-image {
-    width: 200px; /* Adjust width and height as needed */
-    height: 200px;
-    flex-shrink: 0; /* Prevent image from shrinking */
+    position: absolute; /* Use absolute positioning */
+    top: 45%; /* Center it vertically */
+    right: -5%; /* Center it horizontally */
+    transform: translate(-50%, -50%); /* Adjust for centering */
+    width: 300px; /* Ensure it doesn’t exceed the header width */
+    height: 300px; /* Keep the aspect ratio */
+    z-index: 1; /* Make sure it's above the header background */
+    transition: transform 0.5s ease-in-out; 
+}
+.slide-out {
+    transform: translate(100%, -50%); /* Move to the right */
 }
 
-/* New CSS for menu items container */
+.slide-in {
+    transform: translate(-50%, -50%); /* Bring in from the left */
+    animation: slide-in 0.5s forwards; /* Optional: use animation for extra effect */
+}
+
+.card {
+    max-width: 200px; /* Set max width */
+    max-height: 200px; /* Set max width */
+    position: relative; /* Required for positioning child elements */
+    align-self: right;
+}
+
 .header-menu-items {
     display: flex; /* Layout menu items in a row */
     gap: 10px; /* Space between items */
     flex-wrap: wrap; /* Allow wrapping for smaller screens */
-    margin-left: 20px; /* Add margin to separate from header contents */
 }
 
-.header-menu-list-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.2s; /* Optional hover effect */
-}
 
-.header-menu-list-item img {
-    width: 50px; /* Set size for menu item images */
-    height: auto;
-}
 
-/* Media queries for responsiveness */
-@media (max-width: 1050px) {
-    .header-contents {
-        max-width: 45%;
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+
+    .header {
+        align-items: center; /* Center items vertically */
+        height: auto;
+        position: relative;
+        background-color: #ffd63d; /* Existing background */
+        padding: 40px 0px;
     }
 
-    .header-menu-items {
-        margin-left: 10px; /* Adjust margin for smaller screens */
-    }
-}
-
-@media (max-width: 750px) {
-    .header-contents {
-        max-width: 65%;
-    }
-
-    .header-contents p {
-        display: none;
-    }
-
-    .header-contents button {
-        padding: 2vw 4vw;
+    .header::after { /* Pseudo-element for the red corner */
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px; /* Adjust the width for desired size */
+        height: 200px; /* Adjust the height for desired size */
+        background-color: #D43734; /* Red color */
+        border-bottom-left-radius: 70%; /* Optional: add some rounding */
+        border-top-left-radius: 0%; /* Optional: add some rounding */
+        z-index: 0; /* Keep it behind the header contents and image */
     }
 
     .header-image {
-        display: none; /* Optionally hide image on smaller screens */
+        position: absolute; /* Use absolute positioning */
+        top: 35%; /* Center it vertically */
+        left: 75%; /* Center it horizontally */
+        transform: translate(-50%, -50%); /* Adjust for centering */
+        width: 150px; /* Ensure it doesn’t exceed the header width */
+        height: 150px; /* Keep the aspect ratio */
+        z-index: 1; /* Make sure it's above the header background */
+        transition: transform 0.5s ease-in-out; 
+    }
+    
+    .header-menu-items {
+        display: flex; /* Layout menu items in a row */
+    gap: 5px; /* Space between items */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
     }
 
-    .header-menu-items {
-        flex-direction: column; /* Stack menu items on smaller screens */
-        align-items: center; /* Center items */
+    .header-menu-list-item img {
+        width: 50px; /* Smaller size for mobile */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .header-contents{
+        max-width: 30%;
+        z-index: 1;
+        margin-top: -10%;
+    }
+
+    .header-contents h2 {
+        font-weight: 500;
+        color: black;
+        font-size: max(4.5vw, 15px);
+        
+    }
+    .header-contents h2 h3{
+        font-weight: 500;
+        color: black;
+        font-size: max(4.5vw, 15px);
+        
+    }
+    
+    .header-contents p {
+        color: black;
+        font-size: 3vw;
+    }
+
+    .header-content-container{
+        
+        width: 60% !important;
+        margin-left: 0% !important;
+    }
+    
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translate(-100%, -50%); /* Start from the left */
+    }
+    100% {
+        transform: translate(-50%, -50%); /* End at the center */
     }
 }

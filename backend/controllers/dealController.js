@@ -28,7 +28,7 @@ const addDeal = async (req,res) =>{
 
 const listDeal = async (req,res) =>{
     try {
-        const deals = await dealModel.find({}).populate('dealproduct', 'name');
+        const deals = await dealModel.find({}).populate('dealproduct', 'name').populate('dealproduct', 'image');
         res.json({success:true,data:deals})
     } catch (error) {
         console.log(error)

@@ -90,24 +90,35 @@ const registerUser = async (req, res) => {
 var client = new postmark.ServerClient("45b06232-1340-48ef-828c-b85744341170"); // Use API key from your environment variable
 
 // Nodemailer transport configuration for Postmark
-const transporter = nodemailer.createTransport({
-    sendMail: (mailOptions, callback) => {
-        client.sendEmail({
-            From: mailOptions.from,
-            To: mailOptions.to,
-            Subject: mailOptions.subject,
-            TextBody: mailOptions.text,
-            HtmlBody: mailOptions.html,  // Use HTML content if available
-        }, (error, result) => {
-            callback(error, result);
-        });
-    },
-});
+// const transporter = nodemailer.createTransport({
+//     sendMail: (mailOptions, callback) => {
+//         client.sendEmail({
+//             From: mailOptions.from,
+//             To: mailOptions.to,
+//             Subject: mailOptions.subject,
+//             TextBody: mailOptions.text,
+//             HtmlBody: mailOptions.html,  // Use HTML content if available
+//         }, (error, result) => {
+//             callback(error, result);
+//         });
+//     },
+// });
+
 
 // Function to send verification email using Postmark
 const sendVerificationEmail = async (email, verificationToken) => {
     const verificationUrl = `http://localhost:5173/verify?token=${verificationToken}`;
     try {
+        const transporter =  nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure:false,
+            requireTLS:true,
+            auth:{
+                user:'saidj4671@gmail.com',
+                pass:''
+            }
+        })
         const result = client.sendEmail = {
             from: 'hr@hifahtechnologies.com',  // Replace with your verified Postmark sender email
             to: email,

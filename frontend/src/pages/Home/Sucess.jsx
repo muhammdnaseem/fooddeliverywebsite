@@ -6,7 +6,7 @@ import ExploreMenu from '../../components/ExploreMenu/ExploreMenu'
 import FoodDisplay from '../../components/FoodDisplay/FoodDisplay'
 import Deal from '../../components/Deal/Deal'
 import AppDownload from '../../components/AppDownload/AppDownload'
-import SearchBar from '../../components/SearchBar/SearchBar'
+
 
 const Sucess = () => {
 

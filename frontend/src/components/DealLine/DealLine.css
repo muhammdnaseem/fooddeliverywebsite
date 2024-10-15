@@ -1,10 +1,8 @@
 .deal {
     height: 3vw;
-    margin: 30px -10%;
     padding: 5px;
     color: white;
-    background-color: red;
-    width: 120%;
+    background-color: #D43734;
     position: relative;
     display: flex;
     overflow: hidden; /* Hide overflow to ensure text moves smoothly */
@@ -22,5 +20,16 @@
     }
     100% {
         transform: translateX(-100%); /* Move off-screen to the left */
+    }
+}
+@media (max-width: 750px) {
+    .deal {
+        height: 40px;
+        padding: 5px;
+        color: white;
+        background-color: #D43734;
+        position: relative;
+        display: flex;
+        overflow: show; /* Hide overflow to ensure text moves smoothly */
     }
 }

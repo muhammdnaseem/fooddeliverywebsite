@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import './Deal.css';
 import { StoreContext } from '../context/StoreContext';
 import Countdown from '../CountDown/Countdown';
+import { Container } from 'react-bootstrap';
 
 const Deal = () => {
   const { deal_list = [] } = useContext(StoreContext);
@@ -21,6 +22,7 @@ const Deal = () => {
   };
 
   return (
+    <Container>
     <div className="deal-container">
       <div className="deal-box">
         {deal_list.map((item) => (
@@ -35,6 +37,7 @@ const Deal = () => {
         ))}
       </div>
     </div>
+    </Container>
   );
 };
 

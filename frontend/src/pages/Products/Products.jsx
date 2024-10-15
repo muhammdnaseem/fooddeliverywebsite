@@ -1,30 +1,28 @@
 // src/pages/Products.js
 
 import React, { useState } from 'react';
-import './Home.css';
-import DealLine from '../../components/DealLine/DealLine';
+import './ProductCategories.css';
+import Deals from '../../components/Deals/Deals';
 import FoodDisplay from '../../components/FoodDisplay/FoodDisplay';
-import SearchBar from '../../components/SearchBar/SearchBar';
+import Search from '../../components/Search/Search';
+import Categories from '../../components/ExploreMenu/Categories';
 
 const Products = () => {
     const [category, setCategory] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
 
-    console.log(category);
-    // Define your categories here
-    const categories = ['Food', 'Beverages', 'Snacks', 'Dairy', 'Fruits', 'Vegetables'];
-
-    const handleSearch = (term, category) => {
+    const handleSearch = (term) => {
+        console.log('Searching for:', term);
         setSearchTerm(term);
-        setCategory(category);
-        // Optionally, trigger any other search-related logic here
-    };
+      };
 
     return (
         <div>
-            <DealLine />
-            <SearchBar onSearch={handleSearch} categories={categories} />
-            <FoodDisplay category={category} searchTerm={searchTerm} />
+             <Search onSearch={handleSearch} />
+            <Deals limit={1} />
+          
+            {/* <FoodDisplay category={category} searchTerm={searchTerm} /> */}
+            <Categories category={category} setCategory={setCategory}/>
             {/* <AppDownload/> */}
         </div>
     );

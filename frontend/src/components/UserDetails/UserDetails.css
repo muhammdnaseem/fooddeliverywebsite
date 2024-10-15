@@ -1,63 +1,77 @@
 .profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f5f5f5; /* Light background color */
-    border: 1px solid #ddd; /* Light border for separation */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin: 20px; /* Margin around the navbar */
-  }
-  
-  .user-details {
-    background-color: #fff; /* White background for user details */
-    padding: 20px; /* Padding inside the user details section */
-    border-radius: 8px; /* Rounded corners for the details section */
-    width: 300px; /* Fixed width */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for elevation */
-  }
-  
-  h1 {
-    font-size: 24px; /* Size of the heading */
-    color: #333; /* Dark color for the text */
-    margin-bottom: 20px; /* Space below the heading */
-  }
-  
-  label {
-    font-weight: bold; /* Bold labels */
-    margin-bottom: 5px; /* Space below labels */
-    display: block; /* Block display for labels */
-  }
-  
-  input[type="text"],
-  input[type="email"] {
-    width: 100%; /* Full width input fields */
-    padding: 10px; /* Padding inside input fields */
-    margin-bottom: 20px; /* Space below input fields */
-    border: 1px solid #ccc; /* Border for input fields */
-    border-radius: 4px; /* Rounded corners for input fields */
-    box-sizing: border-box; /* Include padding and border in the element's total width */
-  }
-  
-  button {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white; /* White text */
-    padding: 10px 15px; /* Padding around button text */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    margin-top: 10px; /* Space above the button */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-  }
-  
-  button:hover {
-    background-color: #0056b3; /* Darker shade on hover */
-  }
-  
-  span {
-    font-size: 14px; /* Size of the verification status text */
-    color: #666; /* Gray color for less emphasis */
-    display: inline-block; /* Make span inline block for better alignment */
-  }
-  
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.user-details {
+  width: 400px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: bold;
+}
+
+.section input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn,
+.change-btn,
+.logout-btn {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover,
+.change-btn:hover,
+.logout-btn:hover {
+  background-color: #aaa;
+}
+
+.logout-btn {
+  width: 100%;
+  margin-top: 20px;
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #ff1a1a;
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+  color: #aaa;
+  cursor: not-allowed;
+}

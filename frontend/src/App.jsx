@@ -4,6 +4,7 @@ import Topbar from './components/Topbar/Topbar'
 import {Route, Routes} from 'react-router-dom'
 import Home from './pages/Home/Home'
 import AddExtra from './pages/AddExtra/AddExtra'
+import MyCart from './pages/MyCart/MyCart'
 import Cart from './pages/Cart/Cart'
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import Footer from './components/Footer/Footer'
@@ -14,6 +15,7 @@ import Products from './pages/Products/ProductCategories'
 import ProductCategories from './pages/Products/ProductCategories'
 import Sucess from './pages/Home/Sucess'
 import Profile from './pages/Profile/Profile'
+import AboutUs from './components/AboutUs/AboutUs'
 
 
 const App = () => {
@@ -30,10 +32,12 @@ const App = () => {
         <Route path='/sucess' element={<Sucess/>}/>
         <Route path='/categories' element={<ProductCategories />}/>
         <Route path='/add-extra' element={<AddExtra />}/>
+        <Route path='/my-cart' element={<MyCart/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/order' element={<PlaceOrder/>}/>
         <Route path='/verify' element={<Verify/>}/>
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='/aboutus' element={<AboutUs/>}/>
         <Route path='/myorders' element={<MyOrders/>}/>
       </Routes>
     </div>

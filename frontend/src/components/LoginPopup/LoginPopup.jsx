@@ -12,7 +12,7 @@ const LoginPopup = ({ setShowLogin }) => {
         name: "",
         email: "",
         password: "",
-        newPassword: "" // New state for the new password
+        newPassword: "" 
     });
 
     const onChangeHandler = (event) => {
@@ -29,29 +29,25 @@ const LoginPopup = ({ setShowLogin }) => {
             newUrl += "/api/user/login";
         } else if (currentState === 'Forgot Password') {
             newUrl += "/api/user/forgotpassword";
-            // Send only the email for forgot password
             const response = await axios.post(newUrl, { email: data.email });
 
-            console.log(response);
-            // Handle the response
             if (response.data.success) {
                 alert('Reset link sent to your email!');
-                setCurrentState('Login'); // Optionally navigate back to login
+                setCurrentState('Login'); 
             } else {
-                alert(response.data || 'Something went wrong. Please try again.');
+                alert(response.data.message || 'Something went wrong. Please try again.');
             }
-            return; // Prevent further processing
+            return;
         } else if (currentState === 'New Password') {
             newUrl += "/api/user/resetpassword";
             const response = await axios.post(newUrl, { newPassword: data.newPassword });
-            // Handle the response
             if (response.data.success) {
                 alert('Password reset successfully!');
                 setCurrentState('Login');
             } else {
                 alert(response.data.message || 'Something went wrong. Please try again.');
             }
-            return; // Prevent further processing
+            return;
         } else {
             newUrl += "/api/user/register";
         }
@@ -64,36 +60,39 @@ const LoginPopup = ({ setShowLogin }) => {
                 localStorage.setItem("token", response.data.token);
                 setShowLogin(false);
             } else {
-                alert(response.data.message); // Show success message for other actions
+                alert(response.data.message);
                 if (currentState === 'Forgot Password') {
-                    setCurrentState('New Password'); // Switch to new password state after sending reset link
+                    setCurrentState('New Password'); 
                 }
             }
         } else {
             alert(response.data.message);
-            console.log(response);
         }
     };
 
     return (
         <div className='login-popup'>
-            <form onSubmit={onLogin} className="login-popup-container" style={{zIndex: '9999'}}>
+            <form onSubmit={onLogin} className="login-popup-container">
                 <div className="login-popup-title">
-                    <h2>{currentState}</h2>
-                    <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="" />
+                    <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="close" />
                 </div>
+
+                {/* Tabs for Login and Sign Up */}
+                <div className="login-popup-tabs">
+                    <span className={currentState === 'Login' ? 'active' : ''} onClick={() => setCurrentState('Login')}>Login</span>
+                    <span className={currentState === 'Sign Up' ? 'active' : ''} onClick={() => setCurrentState('Sign Up')}>Sign Up</span>
+                </div>
+
                 <div className="login-popup-inputs">
                     {currentState === 'New Password' ? (
-                        <>
-                            <input 
-                                name='newPassword' 
-                                onChange={onChangeHandler} 
-                                value={data.newPassword} 
-                                type="password" 
-                                placeholder='New Password' 
-                                required 
-                            />
-                        </>
+                        <input 
+                            name='newPassword' 
+                            onChange={onChangeHandler} 
+                            value={data.newPassword} 
+                            type="password" 
+                            placeholder='New Password' 
+                            required 
+                        />
                     ) : currentState === 'Forgot Password' ? (
                         <input 
                             name='email' 
@@ -135,22 +134,31 @@ const LoginPopup = ({ setShowLogin }) => {
                     )}
                 </div>
 
-                <button type='submit'>{currentState === 'Sign Up' ? 'Create account' : currentState === 'Forgot Password' ? 'Send Reset Link' : currentState === 'New Password' ? 'Reset Password' : 'Login'}</button>
+                <button type='submit'>
+                    {currentState === 'Sign Up' ? 'Create Account' : currentState === 'Forgot Password' ? 'Send Reset Link' : currentState === 'New Password' ? 'Reset Password' : 'Login'}
+                </button>
+
                 <div className="login-popup-condition">
                     <input type="checkbox" required />
-                    <p>By continuing, I agree to the terms of use & privacy policy</p>
+                    <p>By continuing, I agree to the <a href="#">terms of use</a> & <a href="#">privacy policy</a></p>
                 </div>
+
                 {currentState === 'Login' ? (
-                    <>
-                        <p>Create a new account? <span onClick={() => setCurrentState('Sign Up')}>Click here</span></p>
-                        <p><span onClick={() => setCurrentState('Forgot Password')}>Forgot Password?</span></p>
-                    </>
-                ) : (
-                    <p>Already have an account? <span onClick={() => setCurrentState('Login')}>Login here</span></p>
-                )}
+                    <p className='login-popup-forgot' onClick={() => setCurrentState('Forgot Password')}>Forgot password?</p>
+                ) : currentState === 'Forgot Password' ? (
+                    <p className='login-popup-forgot' onClick={() => setCurrentState('Login')}>Back to Login</p>
+                ) : currentState === 'New Password' ? (
+                    <p className='login-popup-forgot' onClick={() => setCurrentState('Login')}>Back to Login</p>
+                ) : null}
+
+                <div className="login-popup-socials">
+                    <img src={assets.fb_icon} alt="Facebook" />
+                    <img src={assets.g_icon} alt="Google" />
+                    <img src={assets.in_icon} alt="LinkedIn" />
+                </div>
             </form>
         </div>
     );
-}
+};
 
 export default LoginPopup;

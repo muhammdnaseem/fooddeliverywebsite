@@ -1,0 +1,86 @@
+.about-us {
+  padding: 40px;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.about-us-info {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-us-info h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  font-size: 16px;
+}
+
+.location-map {
+  margin-top: 20px;
+}
+
+.history {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.history h2 {
+  font-size: 26px;
+  color: #ffcc00;
+}
+
+.history p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.history-details {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.history-item h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.history-item p {
+  font-size: 16px;
+  max-width: 250px;
+}
+
+.insights {
+  text-align: center;
+}
+
+.insights h2 {
+  font-size: 26px;
+  color: #ffcc00;
+  margin-bottom: 20px;
+}
+
+.insight-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.insight-images img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}

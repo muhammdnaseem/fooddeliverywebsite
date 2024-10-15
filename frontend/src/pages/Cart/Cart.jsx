@@ -544,10 +544,11 @@ const makeSamsungPayment = async () => {
               <b>${(getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2).toFixed(2)}</b>
             </div>
           </div>
-          {/* <button 
-            onClick={makePayment}
-            // onClick={()=> navigate('/order')}
+           <button 
+            // onClick={makePayment}
+             onClick={()=> navigate('/order')}
           >PROCEED TO CHECKOUT</button>
+          {/*
           <button 
             onClick={makeBinancePayment}
             // onClick={()=> navigate('/order')}

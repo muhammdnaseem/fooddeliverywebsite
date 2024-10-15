@@ -182,25 +182,56 @@
   }
   
 
-  /* AddExtra.css */
-.extra-item {
+  .extra-item {
     display: flex;
     align-items: center;
   }
   
   .extra-custom-radio {
     margin-right: 10px; /* Space between radio button and label */
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ffcc00;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ffcc00; /* Custom border color */
+    border-radius: 50%; /* Makes it a circle */
+    appearance: none; /* Remove default styles */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Pointer cursor on hover */
+    background-color: transparent; /* Default background is transparent */
+    position: relative; /* For positioning the inner circle */
+  }
+  
+  /* Pseudo-element for inner circle with padding */
+  .extra-custom-radio::before {
+    content: '';
+    position: absolute;
+   
+    width: 20px; /* Inner circle size */
+    height: 20px; /* Inner circle size */
+    border-radius: 50%; /* Makes it a circle */
+    background-color: transparent; /* Default inner color is transparent */
+    transition: background-color 0.2s; /* Smooth transition */
+    border: 2px solid transparent; /* Default border for the inner circle */
+  }
+  
+  /* Custom styles when the radio button is checked */
+  .extra-custom-radio:checked::before {
+    background-color: black; /* Fill color when checked */
+    border: 2px solid white; /* No border for the inner circle when checked */
+   
+  }
+  
+  /* Optional: Styles for when hovering over the radio button */
+  .extra-custom-radio:hover {
+    border-color: #ff9900; /* Change border color on hover */
   }
   
   .extra-custom-radio-label {
     display: flex;
     justify-content: space-between; /* Stretch label content across */
     align-items: center;
-    width: 100%; /* Ensure the label takes full width of the container */
+    width: 50%; /* Ensure the label takes full width of the container */
   }
+  
   
   .size-label {
     flex-grow: 1; /* Allow the label text to grow and center within the space */
@@ -247,9 +278,47 @@
     padding: 10px; /* Padding for the columns */
   }
   
+  /* .addons-radio, .drinks-radio {
+    margin-right: 25px;
+  } */
   .addons-radio, .drinks-radio {
-    margin-right: 25px; /* Space between radio and label */
+    margin-right: 10px; /* Space between radio button and label */
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ffcc00; /* Custom border color */
+    border-radius: 50%; /* Makes it a circle */
+    appearance: none; /* Remove default styles */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Pointer cursor on hover */
+    background-color: transparent; /* Default background is transparent */
+    position: relative; /* For positioning the inner circle */
   }
+  
+  /* Pseudo-element for inner circle with padding */
+  .addons-radio::before, .drinks-radio::before {
+    content: '';
+    position: absolute;
+   
+    width: 20px; /* Inner circle size */
+    height: 20px; /* Inner circle size */
+    border-radius: 50%; /* Makes it a circle */
+    background-color: transparent; /* Default inner color is transparent */
+    transition: background-color 0.2s; /* Smooth transition */
+    border: 2px solid transparent; /* Default border for the inner circle */
+  }
+  
+  /* Custom styles when the radio button is checked */
+  .addons-radio:checked::before, .drinks-radio:checked::before {
+    background-color: black; /* Fill color when checked */
+    border: 2px solid white; /* No border for the inner circle when checked */
+  }
+  
+  /* Optionally, to make the transition look smooth */
+  .addons-radio:checked,
+  .drinks-radio:checked {
+    border-color: #ffcc00; /* Maintain border color on checked */
+  }
+  
   .related-items-section {
     margin-top: 20px; /* Space above this section */
   }
@@ -273,3 +342,7 @@
     background-color: #0056b3; /* Darker shade for hover */
   }
   
+
+  .header-button{
+    padding: 5px 70px 5px 70px !important;
+  }

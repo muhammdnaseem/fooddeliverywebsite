@@ -36,47 +36,36 @@ const StoreContextProvider = (props) => {
     const handleSizeChange = async (itemId, oldSize, newSize) => {
         const oldItemKey = `${itemId}-${oldSize}`;
         const newItemKey = `${itemId}-${newSize}`;
-    
-        // Move the quantity from the old size to the new size in the cartItems state
-        const updatedCartItems = setCartItems((prev) => {
-            const newCartItems = { ...prev };
-    
-            // Transfer the quantity from old size to new size
-            if (newCartItems[oldItemKey]) {
-                const quantity = newCartItems[oldItemKey];
-                delete newCartItems[oldItemKey]; // Remove the old size
-                newCartItems[newItemKey] = (newCartItems[newItemKey] || 0) + quantity; // Add quantity to the new size
-            }
-    
-            return newCartItems;
+      
+        setCartItems((prev) => {
+          const newCartItems = { ...prev };
+      
+          // Move quantity from old size to new size
+          if (newCartItems[oldItemKey]) {
+            const quantity = newCartItems[oldItemKey];
+            delete newCartItems[oldItemKey]; // Remove old size from cart
+            newCartItems[newItemKey] = (newCartItems[newItemKey] || 0) + quantity;
+          }
+          return newCartItems;
         });
-    
-        // Send the updated cart data to the backend
+      
+        // Send size change to backend (if needed)
         if (token) {
-            try {
-                await axios.post(`${url}/api/cart/update`, {
-                    itemId,
-                    oldSize,
-                    newSize
-                }, { headers: { token } });
-            } catch (error) {
-                console.error("Error updating cart size:", error);
-            }
+          try {
+            await axios.post(`${url}/api/cart/update`, {
+              itemId,
+              oldSize,
+              newSize,
+            }, { headers: { token } });
+          } catch (error) {
+            console.error("Error updating cart size:", error);
+          }
         }
-    
-        // Update the selected size state
+      
+        // Update selectedSizes state
         setSelectedSizes((prev) => ({ ...prev, [itemId]: newSize }));
-    
-        // Calculate subtotal for the updated item
-        const itemInfo = food_list.find((product) => product._id === itemId);
-        const updatedSubtotal = itemInfo ? itemInfo.sizes.find((s) => s.size === newSize)?.price * (updatedCartItems[newItemKey] || 0) : 0;
-    
-        console.log('Updated Subtotal for Item:', updatedSubtotal);
-    
-        // Update the total amount after size change
-        const updatedTotalAmount = getTotalCartAmount(); // This function should be defined to calculate the total
-        console.log('Updated Total Amount:', updatedTotalAmount);
-    };
+      };
+      
     
     
 

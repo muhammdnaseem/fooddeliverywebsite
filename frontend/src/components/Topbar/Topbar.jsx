@@ -4,8 +4,11 @@ import { assets } from '../../assets/assets';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Topbar = () => {
+  const navigate = useNavigate(); // Initialize navigate
   return (
     <Navbar expand="lg" className="custom-navbar-bg">
       <Container>
@@ -28,6 +31,16 @@ const Topbar = () => {
           <div className="navbar-location d-flex align-items-center">
             <img src={assets.location_icon} alt="Location" className="location-icon me-2" />
             <p className="mb-0">NAWASHER, ABBOTABAD</p>
+          </div>
+
+          {/* Right Section - Location Info with Icon */}
+          <div className="navbar-location d-flex align-items-center">
+            <Button
+            variant="danger"
+            onClick={() => navigate('/franchise')}
+            >
+              FRANCHISE
+            </Button>
           </div>
         </div>
       </Container>

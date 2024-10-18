@@ -2,13 +2,12 @@
 .place-order {
     display: flex;
     justify-content: space-between;
-    margin-top: 50px;
-    padding: 20px;
+    margin-top: 0px;
     gap: 30px;
   }
   
   .place-order-left, .place-order-right {
-    background-color: #f9f9f9;
+    background: transparent;
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,8 +22,12 @@
   
   .place-order-right {
     width: 35%;
+    border: 1px solid black;
   }
   
+  .place-order-left .title{
+    border-bottom: 1px solid black;
+  }
   .title {
     font-size: 24px;
     font-weight: 600;
@@ -34,7 +37,7 @@
   .place-order-left input, .place-order-left textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #000;
     border-radius: 5px;
     font-size: 16px;
     outline: none;
@@ -61,13 +64,15 @@
   .cart-total-detail {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
-    font-size: 18px;
+    padding: 10px;
+    border-radius: 5px;  /* Optional: Rounds the corners */
   }
   
+  
   hr {
-    margin: 15px 0;
-    border: 1px solid #ddd;
+    width: 115%;
+    margin-left: -7.5% !important;
+    border: 2px solid #000;
   }
   
   .confirm-button {
@@ -86,3 +91,57 @@
     background-color: #ffb400;
   }
   
+  .card{
+    width: 100%;
+    height: 300px;
+  }
+
+  .card-element {
+    padding: 10px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  .confirm-button {
+    background-color: #ffcc00;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .confirm-button:disabled {
+    background-color: #000;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width:750px){
+    .cart-total-detail{
+      display: block;
+    }
+    .place-order {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0px;
+      gap: 0px;
+    }
+    
+    .place-order-left, .place-order-right {
+      background: transparent;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .place-order-left {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .place-order-right {
+      width: 40%;
+      border: 1px solid black;
+    }
+  }

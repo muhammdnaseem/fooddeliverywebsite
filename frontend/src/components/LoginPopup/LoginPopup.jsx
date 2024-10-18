@@ -12,13 +12,14 @@ const LoginPopup = ({ setShowLogin }) => {
         name: "",
         email: "",
         password: "",
-        newPassword: "" 
+        newPassword: "",
+        confirmpassword: "",
+        otp: ""
     });
 
     const onChangeHandler = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setData(data => ({ ...data, [name]: value }));
+        const { name, value } = event.target;
+        setData((prevData) => ({ ...prevData, [name]: value }));
     };
 
     const onLogin = async (event) => {
@@ -33,7 +34,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
             if (response.data.success) {
                 alert('Reset link sent to your email!');
-                setCurrentState('Login'); 
+                setCurrentState('Login');
             } else {
                 alert(response.data.message || 'Something went wrong. Please try again.');
             }
@@ -62,7 +63,7 @@ const LoginPopup = ({ setShowLogin }) => {
             } else {
                 alert(response.data.message);
                 if (currentState === 'Forgot Password') {
-                    setCurrentState('New Password'); 
+                    setCurrentState('New Password');
                 }
             }
         } else {
@@ -70,66 +71,144 @@ const LoginPopup = ({ setShowLogin }) => {
         }
     };
 
+    const handleGoogleLogin = () => {
+        window.open(`${url}/api/user/auth/google`, '_self');
+    };
+
     return (
         <div className='login-popup'>
             <form onSubmit={onLogin} className="login-popup-container">
+                <img
+                    onClick={() => setShowLogin(false)}
+                    src={assets.cross_icon}
+                    alt="close"
+                    className='close-button'
+                />
+
                 <div className="login-popup-title">
-                    <img onClick={() => setShowLogin(false)} src={assets.cross_icon} alt="close" />
+                    <h1>
+                        <span>W</span>elcome {currentState === 'Login' && (<><span>B</span>ack</>)}
+                    </h1>
+                    <br />
+                    {currentState === 'Sign Up' && (<h2><span>S</span>ign <span>U</span>p</h2>)}
+                    {currentState === 'Login' && (<h2><span>L</span>ogin</h2>)}
                 </div>
 
-                {/* Tabs for Login and Sign Up */}
-                <div className="login-popup-tabs">
-                    <span className={currentState === 'Login' ? 'active' : ''} onClick={() => setCurrentState('Login')}>Login</span>
-                    <span className={currentState === 'Sign Up' ? 'active' : ''} onClick={() => setCurrentState('Sign Up')}>Sign Up</span>
+                <div className="login-popup-tabs my-3">
+                    <div
+                        className="active-indicator"
+                        style={{ left: currentState === 'Login' ? '0%' : '50%' }}
+                    ></div>
+
+                    <span
+                        className={currentState === 'Login' ? 'active' : ''}
+                        onClick={() => setCurrentState('Login')}
+                    >
+                        Login
+                    </span>
+
+                    <span
+                        className={currentState === 'Sign Up' ? 'active' : ''}
+                        onClick={() => setCurrentState('Sign Up')}
+                    >
+                        Sign Up
+                    </span>
                 </div>
 
                 <div className="login-popup-inputs">
                     {currentState === 'New Password' ? (
-                        <input 
-                            name='newPassword' 
-                            onChange={onChangeHandler} 
-                            value={data.newPassword} 
-                            type="password" 
-                            placeholder='New Password' 
-                            required 
+                        <input
+                            name='newPassword'
+                            onChange={onChangeHandler}
+                            value={data.newPassword}
+                            type="password"
+                            placeholder='New Password'
+                            required
                         />
                     ) : currentState === 'Forgot Password' ? (
-                        <input 
-                            name='email' 
-                            onChange={onChangeHandler} 
-                            value={data.email} 
-                            type="email" 
-                            placeholder='Your email' 
-                            required 
+                        <input
+                            name='email'
+                            onChange={onChangeHandler}
+                            value={data.email}
+                            type="email"
+                            placeholder='Your email'
+                            required
                         />
                     ) : (
                         <>
                             {currentState === 'Sign Up' && (
-                                <input 
-                                    name='name' 
-                                    onChange={onChangeHandler} 
-                                    value={data.name} 
-                                    type="text" 
-                                    placeholder='Your name' 
-                                    required 
-                                />
+                                <>
+                                    <input
+                                        name='name'
+                                        onChange={onChangeHandler}
+                                        value={data.name}
+                                        type="text"
+                                        placeholder='Your name'
+                                        required
+                                    />
+                                    <div className="email-input-wrapper">
+                                        <input
+                                            name="email"
+                                            onChange={onChangeHandler}
+                                            value={data.email}
+                                            type="email"
+                                            placeholder="Email"
+                                            required
+                                        />
+                                        <button className="send-otp-button">Send OTP</button>
+                                    </div>
+                                    <input
+                                        name="otp"
+                                        onChange={onChangeHandler}
+                                        value={data.otp}
+                                        type="text"
+                                        placeholder="Enter OTP"
+                                        required
+                                    />
+                                    <input
+                                        name="password"
+                                        onChange={onChangeHandler}
+                                        value={data.password}
+                                        type="password"
+                                        placeholder='Password'
+                                        required
+                                    />
+                                    <input
+                                        name='confirmpassword'
+                                        onChange={onChangeHandler}
+                                        value={data.confirmpassword}
+                                        type="password"
+                                        placeholder='Confirm Password'
+                                        required
+                                    />
+                                </>
                             )}
-                            <input 
-                                name='email' 
-                                onChange={onChangeHandler} 
-                                value={data.email} 
-                                type="email" 
-                                placeholder='Your email' 
-                                required 
-                            />
-                            <input 
-                                name='password' 
-                                onChange={onChangeHandler} 
-                                value={data.password} 
-                                type="password" 
-                                placeholder='Password' 
-                                required 
-                            />
+                            {currentState === 'Login' && (
+                                <>
+                                    <input
+                                        name='email'
+                                        onChange={onChangeHandler}
+                                        value={data.email}
+                                        type="email"
+                                        placeholder='Email'
+                                        required
+                                    />
+                                    <input
+                                        name='password'
+                                        onChange={onChangeHandler}
+                                        value={data.password}
+                                        type="password"
+                                        placeholder='Password'
+                                        required
+                                    />
+                                    <p
+                                        className="forgot-password"
+                                        onClick={() => setCurrentState('Forgot Password')}
+                                    >
+                                        Forgot password?
+                                    </p>
+                                </>
+                            )}
                         </>
                     )}
                 </div>
@@ -138,23 +217,17 @@ const LoginPopup = ({ setShowLogin }) => {
                     {currentState === 'Sign Up' ? 'Create Account' : currentState === 'Forgot Password' ? 'Send Reset Link' : currentState === 'New Password' ? 'Reset Password' : 'Login'}
                 </button>
 
-                <div className="login-popup-condition">
-                    <input type="checkbox" required />
-                    <p>By continuing, I agree to the <a href="#">terms of use</a> & <a href="#">privacy policy</a></p>
-                </div>
-
-                {currentState === 'Login' ? (
-                    <p className='login-popup-forgot' onClick={() => setCurrentState('Forgot Password')}>Forgot password?</p>
-                ) : currentState === 'Forgot Password' ? (
-                    <p className='login-popup-forgot' onClick={() => setCurrentState('Login')}>Back to Login</p>
-                ) : currentState === 'New Password' ? (
-                    <p className='login-popup-forgot' onClick={() => setCurrentState('Login')}>Back to Login</p>
-                ) : null}
+                {currentState === 'Sign Up' &&
+                    <div className="login-popup-condition">
+                        <input type="checkbox" required />
+                        <p>By clicking, sign up you agree to our <a href="#">terms of use</a> and <a href="#">privacy policy</a></p>
+                    </div>
+                }
 
                 <div className="login-popup-socials">
-                    <img src={assets.fb_icon} alt="Facebook" />
-                    <img src={assets.g_icon} alt="Google" />
-                    <img src={assets.in_icon} alt="LinkedIn" />
+                    <img src={assets.google} alt="Google" onClick={handleGoogleLogin} />
+                   
+                    <img src={assets.facebook} alt="Facebook" />
                 </div>
             </form>
         </div>

@@ -1,0 +1,90 @@
+/* Ensure the modal has rounded borders consistently */
+.modal-content {
+    border-radius: 30px !important; /* Apply to content wrapper */
+    overflow: hidden; /* Ensure no content overflows the rounded corners */
+  }
+  
+  /* Modal container adjustments */
+  .deal-popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFD63D;
+    padding: 40px;
+    text-align: center;
+    
+  }
+  
+  .popup-content {
+    position: relative;
+    width: 100%;
+    padding: 30px;
+    padding-top: 0;
+    background: #FFD63D;
+  }
+  
+  .popup-deal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .popup-deal-discount {
+    font-size: 80px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #D43734;
+  }
+  
+  .popup-deal-text {
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  Button.popup-deal-button {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 40px;
+    background-color: #F8C400;
+    color: black;
+    border-radius: 20px !important;
+    border: 1px solid black;
+  }
+  
+  Button.popup-deal-button:hover {
+    background-color: #F8C400;
+    color: black;
+    border: 1px solid #F8C400;
+  }
+  
+  /* Remove header border and adjust background */
+  .modal-header {
+    border-bottom: none !important;
+    background-color: #FFD63D !important;
+    padding: 10px 15px;
+    border-top-left-radius: 30px; /* Ensure rounded top corners */
+    border-top-right-radius: 30px;
+  }
+  
+  .modal-header .modal-title {
+    margin: 0 auto; /* Center the title */
+  }
+  
+  /* Style the close button */
+  .modal-header .btn-close {
+    background-color: #F8C400 !important;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
+  }
+  @media (max-width: 750px) {
+    .modal-content{
+      margin-top: -350px;
+    }
+  }

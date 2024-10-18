@@ -4,6 +4,7 @@
     position: relative;
     background-color: #ffd63d; /* Existing background */
     padding: 40px 70px;
+    overflow: hidden; /* Hide any overflow */
 }
 
 .header::after { /* Pseudo-element for the red corner */
@@ -11,12 +12,17 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 250px; /* Adjust the width for desired size */
-    height: 250px; /* Adjust the height for desired size */
+    width: 400px; /* Adjust the width for desired size */
+    height: 400px; /* Adjust the height for desired size */
     background-color: #D43734; /* Red color */
-    border-top-left-radius: 70%; /* Optional: add some rounding */
+    right: -10%;
+    bottom: -40%;
+    border-radius: 50%;
+    border-bottom-left-radius: 0;
     z-index: 0; /* Keep it behind the header contents and image */
+    overflow: hidden;
 }
+
 
 .header-contents {
     display: flex; /* Ensure flex layout */
@@ -100,6 +106,8 @@ Button.header-button {
         background-color: #D43734; /* Red color */
         border-bottom-left-radius: 70%; /* Optional: add some rounding */
         border-top-left-radius: 0%; /* Optional: add some rounding */
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
         z-index: 0; /* Keep it behind the header contents and image */
     }
 
@@ -154,7 +162,9 @@ Button.header-button {
         width: 60% !important;
         margin-left: 0% !important;
     }
-    
+    Button.header-button{
+        padding: 5px 30px 5px 30px !important;
+      }
 }
 
 @keyframes slide-in {

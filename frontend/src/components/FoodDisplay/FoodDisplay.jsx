@@ -24,7 +24,7 @@ const FoodDisplay = ({ searchTerm = '' }) => {
   });
 
   return (
-    <Container>
+    <Container className='my-3'>
       <div className="food-display" id="food-display">
         <h2 className="text-center">Our Menu</h2>
 
@@ -54,9 +54,9 @@ const FoodDisplay = ({ searchTerm = '' }) => {
           <Row className="gx-3 gy-4">
             {/* Render Category Cards */}
             {category_list.map((category) => (
-              <Col key={category._id} xs={12} md={6} lg={4}>
+              <Col key={category._id} xs={12} md={6} lg={4} >
                 <Card
-                  className="category-card"
+                  className="category-card mx-auto"
                   onClick={() => handleCategoryChange(category._id)}
                   style={{ cursor: 'pointer' }}
                 >
@@ -64,7 +64,7 @@ const FoodDisplay = ({ searchTerm = '' }) => {
                     variant="top"
                     src={`${url}/categoryimages/${category.categoryimage}`}
                     className="img"
-                    style={{ height: '200px', objectFit: 'cover' }}
+                    style={{ height: '200px', objectFit: 'cover', border: 0, }}
                   />
                   <Card.Body className="text-center">
                     <Card.Title>{category.categoryname}</Card.Title>

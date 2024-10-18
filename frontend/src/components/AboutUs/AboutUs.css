@@ -6,7 +6,9 @@
 
 .about-us-info {
   text-align: center;
-  margin-bottom: 40px;
+  padding: 8%;
+  border: 1px solid black;
+  border-radius: 20px;
 }
 
 .about-us-info h2 {
@@ -15,23 +17,14 @@
   color: #333;
 }
 
-.contact-info {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  margin-bottom: 30px;
-}
 
-.info-item {
-  font-size: 16px;
-}
+
+
 
 .location-map {
   margin-top: 20px;
 }
-
 .history {
-  text-align: center;
   margin-bottom: 40px;
 }
 
@@ -41,26 +34,28 @@
 }
 
 .history p {
-  font-size: 18px;
+  font-size: 30px;
   margin-bottom: 30px;
 }
 
 .history-details {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
+  gap: 80px;
+  
 }
 
 .history-item h3 {
   font-size: 20px;
-  color: #333;
+  color: #ffcc00;
   margin-bottom: 10px;
 }
 
 .history-item p {
   font-size: 16px;
-  max-width: 250px;
+  font-weight: normal;
+  text-align: justify;
+  max-width: 100%; /* Adjusted for responsiveness */
 }
+
 
 .insights {
   text-align: center;
@@ -75,12 +70,18 @@
 .insight-images {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 5px;
 }
 
 .insight-images img {
-  width: 250px;
-  height: 200px;
+  width: 500px !important;
+  height: 400px;
   object-fit: cover;
   border-radius: 10px;
+}
+.vertical-line {
+  width: 1px;
+  height: 100%;
+  background-color: #ccc;
+  margin: 0 auto;
 }

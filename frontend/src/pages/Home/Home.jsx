@@ -4,7 +4,10 @@ import DealLine from '../../components/DealLine/DealLine'
 import Header from '../../components/Header/Header'
 import ExploreMenu from '../../components/ExploreMenu/ExploreMenu'
 
+import Deal from '../../components/Deal/Deal'
+
 import Deals from '../../components/Deals/Deals'
+import Testimonials from '../../components/Testimonials/Testimonials'
 
 
 const Home = () => {
@@ -26,11 +29,13 @@ const Home = () => {
    
       <DealLine/>
       <Header/>
-      {/* <Deal/> */}
+      <Deal/>
       
       <ExploreMenu category={category} setCategory={setCategory}/>
 
       <Deals />
+
+      <Testimonials/>
       {/* <SeasonalFlavour /> */}
       {/* <FoodDisplay category={category}/> */}
       {/* <AppDownload/> */}

@@ -6,6 +6,7 @@ import { FaMinus } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa"; // Import arrow icon for related items
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 
 const MyCart = () => {
   const {
@@ -93,12 +94,11 @@ const MyCart = () => {
 
           {/* Order Summary Row */}
           <tr className="summary-row">
-            <td colSpan="2"></td>
+            
             <td className="summary-label">Subtotal</td>
             <td>${getTotalCartAmount().toFixed(2)}</td>
-          </tr>
-          <tr className="summary-row">
-            <td colSpan="2"></td>
+          
+           
             <td className="summary-label">Delivery Fee</td>
             <td>${deliveryFee.toFixed(2)}</td>
           </tr>
@@ -110,32 +110,44 @@ const MyCart = () => {
         </tbody>
       </table>
 
-      <div className="checkout-container">
-        <button className="checkout-btn" onClick={()=> navigate('/order')}>Proceed to Checkout</button>
+      <div className="checkout-container text-center">
+        <Button variant="warning" className="header-button" onClick={()=> navigate('/order')}>Confirm</Button>
       </div>
-
-      <h2>Related Items</h2>
+      <h2>More Foods</h2>
       
-            {/* Related Items Section */}
-            {relatedItems.length > 0 && (
-                <div className="related-items-section">
-                   
-                    <div className="food-display-list">
-                        {relatedItems.map(item => (
-                            <FoodItem
-                                key={item._id}
-                                id={item._id}
-                                name={item.name}
-                                category={item.category}
-                                description={item.description}
-                                sizes={item.sizes}
-                                image={item.image}
-                                reviews={item.reviews}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
+      {/* Related Items Section */}
+      {relatedItems.length > 0 && (
+          <div className="related-items-section py-2">
+             
+             
+             
+
+<Row className="gx-3 gy-4">
+            {/* Render Category Cards */}
+            {relatedItems.slice(0, 3).map((item) => (
+              <Col key={item._id} xs={12} md={6} lg={4} >
+                <Card
+                  className="category-card related-item mx-auto"
+                  // onClick={() => handleCategoryChange(item._id)}
+                  style={{ cursor: 'pointer', margin: 0, padding: 0, }}
+                >
+                  <Card.Img
+                    variant="top"
+                    src={`${url}/images/${item.image}`}
+                    className="img"
+                    style={{ height: '120px', minWidth: '100%', objectFit: 'cover', border: 0, }}
+                  />
+                  <Card.Body className="text-center"
+                  style={{height: '20px', overflow: 'hidden'}}>
+                    <Card.Title>{item.name}</Card.Title>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+             
+          </div>
+      )}
     </div>
   );
 };

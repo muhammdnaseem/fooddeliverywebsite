@@ -29,10 +29,11 @@ const Footer = () => {
           <div className="footer-content">
             <h5>COMPANY</h5>
             <ListGroup>
-              <ListGroup.Item className="border-0 p-0 bg-transparent">Home</ListGroup.Item>
+              <ListGroup.Item className="border-0 p-0 bg-transparent">Menu</ListGroup.Item>
               <ListGroup.Item className="border-0 p-0 bg-transparent">About Us</ListGroup.Item>
-              <ListGroup.Item className="border-0 p-0 bg-transparent">Delivery</ListGroup.Item>
-              <ListGroup.Item className="border-0 p-0 bg-transparent">Privacy Policy</ListGroup.Item>
+              <ListGroup.Item className="border-0 p-0 bg-transparent">Contact Us</ListGroup.Item>
+              <ListGroup.Item className="border-0 p-0 bg-transparent">Main dishes
+              </ListGroup.Item>
             </ListGroup>
           </div>
         </Col>
@@ -65,11 +66,7 @@ const Footer = () => {
 
     
       
-      {/* ListGroup in one line */}
-      <ListGroup className="d-flex justify-content-center align-items-center flex-row my-3">
-        <ListGroup.Item className="border-0 p-0 mx-3 bg-transparent">Terms Of Service</ListGroup.Item>
-        <ListGroup.Item className="border-0 p-0 mx-3 bg-transparent">Privacy Policy</ListGroup.Item>
-      </ListGroup>
+      
 
       <hr className="my-3" />
 

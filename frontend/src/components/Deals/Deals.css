@@ -23,26 +23,46 @@
   transform: translateY(-10px);
 }
 
+
+
 /* Big Deal Styling */
 .first-deal .deal-card.big-deal {
-  background-color: #D43734;
+  background: transparent;
   color: white;
   display: flex;
   align-items: center;
   flex-direction: row;
   padding: 0;
   overflow: hidden;
+  
+  
 }
 
-.first-deal .deal-info.big-deal-info {
-  flex: 1;
-  padding: 20px;
-}
-.first-deal .deal-info.big-deal-info {
+.first-deal .best-deal-info.big-deal-info {
+  flex: 1; 
+  background-color: #f8c400;
+  min-height: 275px;
+  margin-left: -140px;
   transform: translateX(5%);
-  clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 20% 100%);
 
 }
+
+
+.first-deal .best-deal-info.big-deal-info .red-cover {
+  background-color: #D43734;
+  flex: 1;
+  min-height: 275px;
+  margin-left: 50px;
+  transform: translateX(5%);
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  border: 1px solid white;
+  z-index: 999;
+  overflow: visible;
+}
+
+
+
 
 .first-deal .deal-title {
   font-size: 2rem;

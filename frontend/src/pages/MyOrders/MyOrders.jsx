@@ -4,6 +4,7 @@ import { StoreContext } from './../../components/context/StoreContext';
 import axios from 'axios';
 import { assets } from './../../assets/assets';
 import ReviewModal from './ReviewModal';
+import { Button } from 'react-bootstrap';
 
 const MyOrders = () => {
     const { url, token } = useContext(StoreContext);
@@ -53,28 +54,31 @@ const MyOrders = () => {
 
     return (
         <div className='my-orders'>
-            <h2>My Orders</h2>
+           
             <div className="container">
+            <h2 className='mb-5'>My Orders</h2>
                 {data.map((order, index) => (
                     <div key={index} className="my-orders-order">
                         <img src={assets.parcel_icon} alt="" />
                         <p>{order.items.map((item, itemIndex) => (
-                            <span key={itemIndex}>
-                                {item.name} x {item.quantity}{itemIndex < order.items.length - 1 ? ', ' : ''}
-                            </span>
+                           <span key={itemIndex}>
+                           {item.name} x {item.quantity}
+                           {itemIndex < order.items.length - 1 && <br />}
+                         </span>
+                         
                         ))}</p>
                         <p>${order.amount}.00</p>
                         <p>Items: {order.items.length}</p>
-                        <p><span>&#x25cf;</span><b>{order.status}</b></p>
+                        <p><b>{order.status}</b></p>
                         {order.status === 'Delivered' && (
-                            <button onClick={() => handleAddReview(order.items.map(item => item._id))}>
-                                Add Review for All Items
-                            </button>
+                            <Button  variant="warning" className='review-header-button' onClick={() => handleAddReview(order.items.map(item => item._id))}>
+                                Add Reviews 
+                            </Button>
                         )}
                         {order.status !== 'Delivered' && (
-                            <button onClick={fetchOrders}>
-                                Track Order
-                            </button>
+                            <Button  variant="warning" className='review-header-button' disabled onClick={() => handleAddReview(order.items.map(item => item._id))}>
+                            Add Reviews 
+                        </Button>
                         )}
                     </div>
                 ))}

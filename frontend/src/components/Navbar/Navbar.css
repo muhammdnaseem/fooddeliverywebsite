@@ -8,13 +8,8 @@
 
 
 
-
-
-
-
-
 .navbar .active{
-    padding-bottom: 1px;
+   
     border-bottom: 2px solid #49557e;
 }
 
@@ -49,25 +44,10 @@
     z-index: 1;
 }
 
-.navbar-profile:hover .nav-profile-dropdown{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: #fff2ef;
-    padding: 12px 25px;
-    border-radius: 4px;
-    border: 1px solid tomato;
-    outline: 2px solid;
-    list-style: none;
-}
 
-.nav-profile-dropdown img{
-    width: 20px;
-}
 
-.nav-profile-dropdown li:hover{
-    color: tomato;
-}
+
+
 
 .nav-profile-dropdown li{
     display: flex;
@@ -104,8 +84,31 @@
     } 
 }
 
-.icon{
-    padding: 0 10px;
+.icon {
+    width: 25px;
+    height: 25px;
+    color: black;
+    margin: 0 !important; /* Ensure no margin is added by default */
+    padding: 0 !important; /* Ensure no padding is added by default */
+}
+
+.desktop-icons{
+    margin-right: 5%;
+}
+
+
+
+.desktop-icons .icon {
+    margin: 0 10px; /* Apply consistent spacing for desktop view */
+}
+/* .profile-dropdown.nav-item.dropdown{
+    padding: 0 !important;
+    margin: 0 !important;
+} */
+a#profile-dropdown.dropdown-toggle.nav-link{
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: white;
 }
 
 /* Add padding to the nav links */
@@ -122,8 +125,8 @@
 }
 
 .navbar .active {
-    padding-bottom: 1px;
-    border-bottom: 2px solid #49557e;
+  
+    border-bottom: 2px solid #000;
 }
 
 /* Add padding and border for dropdown links */
@@ -138,12 +141,25 @@
     border-radius: 5px;
 }
 
+.navbar .nav-dropdown-link.profile-dropdown {
+    padding: 0px 0px;
+    display: inline-block;
+    color: #000;
+}
+
+.navbar .nav-dropdown-link.profile-dropdown:hover {
+    background-color: white;
+    border-radius: 5px;
+}
+
+
+
 /* Icons Group for Mobile */
 .mobile-icons {
   display: flex;
   gap: 15px;
   align-items: center;
-  margin: 0 0 0 -15%;
+  margin: 0 0 0 -20% !important;
   
 }
 
@@ -167,6 +183,8 @@
     .desktop-icons{
         display: none !important;
     }
+
+    
 
     #responsive-navbar-nav{
         z-index: 2;

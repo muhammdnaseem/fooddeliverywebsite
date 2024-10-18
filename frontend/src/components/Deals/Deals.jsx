@@ -15,7 +15,7 @@ const Deals = ({ limit }) => {
 
   return (
     <Container className="best-deals">
-      <h2 className={`deals-title ${limit === 1 && 'd-none'}`}>Best Deals</h2>
+      <h2 className={`deals-title text-start ${limit === 1 && 'd-none'}`}>Best Deals</h2>
 
       <Row className="mt-4">
         {dealsToDisplay.map((item, index) => (
@@ -44,12 +44,17 @@ const Deals = ({ limit }) => {
                     />
                     <div className="big-discount-badge">SAVE {item.offpercentage}%</div>
                   </div>
-
-                  <div className="deal-info big-deal-info">
+                  
+                   
+                  <div className="best-deal-info big-deal-info">
+                  
+                  <div className='red-cover'>
                     <h3 className="deal-title">{item.dealtitle}</h3>
                     <p className="deal-description">{item.dealdescription}</p>
                     <h4 className="deal-price">${item.dealprice}</h4>
                     <p className="deal-product">Starting at</p>
+            
+                  </div>
                   </div>
                 </>
               ) : (
@@ -58,7 +63,7 @@ const Deals = ({ limit }) => {
                   <div className="deal-left-side"></div>
                   <div className="small-discount-badge">SAVE {item.offpercentage}%</div>
                   <div
-                    className={`deal-info small-deal-info ${index === 1 ? 'first-small-deal' : ''}`}
+                    className={`best-deal-info small-deal-info ${index === 1 ? 'first-small-deal' : ''}`}
                     style={index === 1 ? { borderRadius: '10% 0 0 10%' } : {}}
                   >
                     <h3 className="deal-title">{item.dealtitle}</h3>

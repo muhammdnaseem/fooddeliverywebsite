@@ -44,7 +44,7 @@ const FoodItem = ({ id, name, category, sizes, description, image, reviews }) =>
   };
 
   return (
-    <div className='food-item'>
+    <div className='food-item '>
       <div className="food-item-img-container">
         <img className='food-item-image' src={`${url}/images/${image}`} alt={name} />
       </div>
@@ -67,7 +67,7 @@ const FoodItem = ({ id, name, category, sizes, description, image, reviews }) =>
 
         {/* Order Section */}
         <Row className="order-container align-items-end">
-          <Col lg={6}>
+          <Col lg={6} sm={6} md={6}>
             <div
               className="order-button text-black"
               onClick={() => handleAddToCartAndRedirect(id)}
@@ -76,7 +76,7 @@ const FoodItem = ({ id, name, category, sizes, description, image, reviews }) =>
               Order Now
             </div>
           </Col>
-          <Col lg={6} className="text-end">
+          <Col lg={6} sm={6} md={6} className="text-end">
             <FaArrowRight
               className="add"
               onClick={() => handleAddToCartAndRedirect(id)}

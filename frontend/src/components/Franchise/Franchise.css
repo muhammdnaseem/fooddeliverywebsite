@@ -1,0 +1,42 @@
+.contact-us-section{
+  border: 1px solid black;
+  padding: 5%;
+  border-radius: 20px;
+}
+.input-container {
+  margin-bottom: 20px; /* Spacing between inputs */
+  position: relative; /* Ensure label positions correctly */
+}
+
+input,
+textarea {
+  width: 100%;
+ 
+  padding: 10px; /* Padding inside the inputs */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  resize: none; /* Prevent resizing of textarea */
+}
+
+textarea {
+  height: 100px; /* Height of the textarea */
+}
+
+input:focus,
+textarea:focus {
+  border-color: #ffd63d;  /* Focus border color */
+  outline: none; /* Remove default outline */
+}
+
+.floating-label {
+  position: absolute;
+  top: -10px; /* Adjust as needed */
+  left: 10px; /* Adjust as needed */
+  font-size: 12px; /* Smaller font size for label */
+  color: #ffd63d;  /* Color for the floating label */
+}
+
+.d-none {
+  display: none; /* Hide the label when not focused */
+}

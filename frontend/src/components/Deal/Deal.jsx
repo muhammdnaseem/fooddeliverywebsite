@@ -1,43 +1,50 @@
-import React, { useContext } from 'react';
-import './Deal.css';
+import React, { useContext, useState, useEffect } from 'react';
+import './Deal.css'; // Ensure you modify the CSS for new styles
 import { StoreContext } from '../context/StoreContext';
-import Countdown from '../CountDown/Countdown';
-import { Container } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Deal = () => {
   const { deal_list = [] } = useContext(StoreContext);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
+  // Show the popup every time the page refreshes
+  useEffect(() => {
+    setShowPopup(true);
+  }, []);
 
-  if (deal_list.length === 0) {
-    return <div>Loading...</div>; // or some placeholder
-  }
-
-  // Formatting options for toLocaleString
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true, // Use 12-hour clock
+  // Handle closing the modal
+  const handleClose = () => {
+    setShowPopup(false);
   };
 
+  if (deal_list.length === 0) {
+    return null; // No need to render anything if there's no deal
+  }
+
+  const deal = deal_list[0]; // Assuming only one deal is available
+
   return (
-    <Container>
-    <div className="deal-container">
-      <div className="deal-box">
-        {deal_list.map((item) => (
-          <div key={item._id} className="deal-item" style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '10px' }}>
-            <h3 style={{ fontWeight: 'bold' }}>Deal Title: {item.dealtitle}</h3>
-            <p>Deal Description: {item.dealdescription}</p>
-            <p style={{ fontWeight: 'bold' }}>Deal Discount: {item.offpercentage}% off</p>
-            <p>Product: <strong>{item.dealproduct.name}</strong></p>
-            <p>Created At: <strong>{new Date(item.createdAt).toLocaleString(undefined, options)}</strong></p> {/* Format Created At with AM/PM */}
-            <p><Countdown dealTime={item.dealtime} createdTime={item.createdAt} /></p>
+    <>
+      {/* The Modal (Popup) */}
+      <Modal  show={showPopup} onHide={handleClose} centered size="lg-md sm-sm">
+        <div className='deal-popup-container'>
+        <Modal.Header closeButton>
+          
+        </Modal.Header>
+        <Modal.Body className="deal-popup">
+          <div className="popup-content">
+          <Modal.Title>TODAY'S DEAL</Modal.Title>
+            <h1 className="popup-deal-discount">{deal.offpercentage}% off</h1>
+            <p className="popup-deal-text">ON ALL FOODS</p>
+            <Button className="popup-deal-button" onClick={() => navigate('/today-deals')}>
+              GET THE DEAL
+            </Button>
           </div>
-        ))}
-      </div>
-    </div>
-    </Container>
+        </Modal.Body>
+        </div>
+      </Modal>
+    </>
   );
 };
 

@@ -10,9 +10,7 @@ const Cart = () => {
 
   const [selectedSpicyLevel, setSelectedSpicyLevel] = useState("0%"); // Track spicy level
 
-  const [samsungPayReady, setSamsungPayReady] = useState(false);
-  const samsungPayClientRef = useRef(null);
-  const samsungPayContainerRef = useRef(null);
+
 
    // Function to handle spicy level change
 const handleSpicyChange = (level) => {
@@ -57,7 +55,7 @@ const handleSpicyChange = (level) => {
     // Create line items for Stripe
     const productItems = products.map(product => ({
         price_data: {
-            currency: 'usd', // Change to your currency
+          currency: 'krw', // Change to your currency
             product_data: {
                 name: product.name, // Using the product name
                 description: product.description, // Using the product description
@@ -121,230 +119,9 @@ const handleSpicyChange = (level) => {
 };
 
 
-const makeBinancePayment = async () => {
-  // Prepare the products for payment
-  const products = Object.keys(cartItems).reduce((acc, itemId) => {
-    const item = food_list.find(item => item._id === itemId);
-    if (cartItems[itemId] > 0) {
-      const selectedSize = selectedSizes[itemId] || 'Regular'; // Default to 'Regular'
-      const price = getPriceForSize(item, selectedSize); // Get price for the selected size
-
-      acc.push({
-        itemId: item._id,
-        name: item.name,
-        description: item.description || '',
-        image: item.image,
-        quantity: cartItems[itemId],
-        price: price // Add price to the product object
-      });
-    }
-    return acc;
-  }, []);
-
-  // Map products to format required for Binance backend API
-  const productItems = products.map(product => ({
-    itemId: product.itemId,   // Product ID
-    name: product.name,       // Product Name
-    quantity: product.quantity, // Quantity
-    price: product.price      // Price in the original currency (e.g., USD)
-  }));
-
-  const body = {
-    productItems // Use productItems for the request body
-  };
-
-  // Make the request to your backend Binance payment API
-  console.log(productItems); // Log line items for debugging
-  const token = localStorage.getItem('token'); // Get token for authentication
-
-  console.log(token);
-
-  const response = await fetch("http://localhost:4000/api/payment/binance", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}` // Include token in the headers
-    },
-    body: JSON.stringify(body)
-  });
-
-  const result = await response.json();
-  console.log("Payment URL from backend:", result); // Log payment URL for debugging
-
-  // Redirect to the Binance payment URL
-  if (result.paymentUrl) {
-    window.location.href = result.paymentUrl; // Redirect the user to the Binance payment URL
-  } else if (result.error) {
-    console.error(result.error); // Log error if payment URL is not available
-  }
-};
-
-// Load the Samsung Pay SDK dynamically
-useEffect(() => {
-  const loadSamsungPaySDK = () => {
-    return new Promise((resolve, reject) => {
-      if (document.getElementById('samsungpay-sdk')) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.id = 'samsungpay-sdk';
-      script.src = 'https://img.mpay.samsung.com/gsmpi/sdk/samsungpay_web_sdk.js';
-      script.onload = resolve;
-      script.onerror = reject;
-      document.body.appendChild(script);
-    });
-  };
-
-  loadSamsungPaySDK()
-    .then(() => {
-      // Initialize the PaymentClient after the SDK is loaded
-      samsungPayClientRef.current = new window.SamsungPay.PaymentClient({
-        environment: "STAGE" // Change to "PRODUCTION" for live
-      });
-      setSamsungPayReady(true);
-    })
-    .catch((error) => {
-      console.error("Failed to load Samsung Pay SDK:", error);
-    });
-}, []);
 
 // Create and add the Samsung Pay button when the client is ready
-useEffect(() => {
-  if (samsungPayReady && samsungPayClientRef.current && samsungPayContainerRef.current) {
-    const samsungPayButton = samsungPayClientRef.current.createButton({
-      onClick: onSamsungPayButtonClicked,
-      buttonStyle: "black" // Options: "black", "white", etc.
-    });
 
-    samsungPayContainerRef.current.appendChild(samsungPayButton);
-  }
-}, [samsungPayReady]);
-
-// Handle the Samsung Pay button click
-const onSamsungPayButtonClicked = () => {
-  const totalAmount = getTotalCartAmount() + 2; // Including delivery fee
-
-  const transactionDetail = {
-    orderNumber: "sAmPle0n1y123", 
-    merchant: {
-      name: "Virtual Shop",
-      url: "https://us-online.stg.mpay.samsung.com/gsmpi-api/v1/transactions", // Your service domain
-      countryCode: "US"
-    },
-    amount: {
-      option: "FORMAT_TOTAL_ESTIMATED_AMOUNT",
-      currency: "USD",
-      total: totalAmount
-    }
-  };
-
-  const paymentMethods = []; // Define based on your requirements
-
-  samsungPayClientRef.current
-    .loadPaymentSheet(paymentMethods, transactionDetail)
-    .then(function (paymentCredential) {
-      console.log("paymentCredential: ", paymentCredential);
-
-      // Send paymentCredential to your backend for processing
-      return fetch("http://localhost:4000/api/payment/samsung", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(paymentCredential)
-      });
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        // Notify Samsung Pay of successful payment
-        const paymentResult = {
-          status: "CHARGED",
-          provider: "SamsungPay"
-        };
-        samsungPayClientRef.current.notify(paymentResult);
-        // Optionally, redirect to order confirmation
-        navigate('/order');
-      } else {
-        // Handle payment failure
-        console.error("Payment failed:", data.message);
-        const paymentResult = {
-          status: "FAILED",
-          provider: "SamsungPay"
-        };
-        samsungPayClientRef.current.notify(paymentResult);
-      }
-    })
-    .catch(function (error) {
-      console.error("Samsung Pay error: ", error);
-    });
-};
-// Inside your Cart component
-
-const makeSamsungPayment = async () => {
-  // Prepare the products for payment
-  const products = Object.keys(cartItems).reduce((acc, itemId) => {
-    const item = food_list.find(item => item._id === itemId);
-    if (cartItems[itemId] > 0) {
-      const selectedSize = selectedSizes[itemId] || 'Regular';
-      const price = getPriceForSize(item, selectedSize);
-      acc.push({
-        itemId: item._id,
-        name: item.name,
-        description: item.description || '',
-        image: item.image,
-        quantity: cartItems[itemId],
-        price: price
-      });
-    }
-    return acc;
-  }, []);
-
-  // Map products to format required for Samsung payment API
-  const productItems = products.map(product => ({
-    itemId: product.itemId,
-    name: product.name,
-    quantity: product.quantity,
-    price: product.price
-  }));
-
-  const body = {
-    productItems,
-    totalAmount: getTotalCartAmount() + 2, // Including delivery fee
-    currency: "USD"
-  };
-
-  // Make the request to your backend Samsung payment API
-  console.log(productItems);
-  const token = localStorage.getItem('token');
-
-  console.log(token);
-
-  try {
-    const response = await fetch("http://localhost:4000/api/payment/samsung", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify(body)
-    });
-
-    const result = await response.json();
-    console.log("Payment URL from backend:", result);
-
-    // Redirect to the Samsung payment URL
-    if (result.paymentUrl) {
-      window.location.href = result.paymentUrl;
-    } else if (result.error) {
-      console.error(result.error);
-    }
-  } catch (error) {
-    console.error("Error making Samsung Pay payment:", error);
-  }
-};
 
  // New function to submit order
  const submitOrder = async (orderData, payment) => {
@@ -545,8 +322,8 @@ const makeSamsungPayment = async () => {
             </div>
           </div>
            <button 
-            // onClick={makePayment}
-             onClick={()=> navigate('/order')}
+            onClick={makePayment}
+            //  onClick={()=> navigate('/order')}
           >PROCEED TO CHECKOUT</button>
           {/*
           <button 

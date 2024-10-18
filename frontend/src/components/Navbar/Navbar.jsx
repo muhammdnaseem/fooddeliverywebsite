@@ -7,6 +7,9 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { FaSearch, FaUserLock, FaShoppingCart, FaUserCheck } from "react-icons/fa";
+import { IoMdLogOut } from "react-icons/io";
+
 
 
 const NavbarComponent = ({ setShowLogin }) => {
@@ -20,6 +23,12 @@ const NavbarComponent = ({ setShowLogin }) => {
     navigate('/');
   };
 
+  // Handle adding to cart and redirecting to AddExtra with itemId as state
+  const handleAddToCartAndRedirect = (itemId) => {
+    addToCart(itemId); // Add item to cart
+    navigate('/add-extra', { state: { itemId } }); // Redirect and pass itemId as state
+  };
+
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar bg-transparent">
   <Container>
@@ -31,20 +40,37 @@ const NavbarComponent = ({ setShowLogin }) => {
 
     {/* Icons Group for Mobile */}
     <div className="mobile-icons d-lg-none d-sm-flex">
-          <img src={assets.search_icon} alt="Search" className="icon" />
-          <Link to="/cart">
-            <img src={assets.basket_icon} alt="Cart" className="icon" />
+          {/* <img src={assets.search_icon} alt="Search" className="icon mx-2" /> */}
+          <FaSearch alt="Search" className="icon mx-2" />
+          <Link onClick={() => handleAddToCartAndRedirect(id)}>
+            {/* <img src={assets.basket_icon} alt="Cart" className="icon mx-2" /> */}
+            <FaShoppingCart alt="Cart" className="icon mx-2"/>
             <div className={getTotalCartAmount() === 0 ? '' : 'dot'}></div>
           </Link>
           {!token ? (
-            <img src={assets.profile_icon1} alt="Profile" className="icon" onClick={() => setShowLogin(true)} />
+            // <img src={assets.profile_icon1} alt="Profile" className="icon mx-2" onClick={() => setShowLogin(true)} />
+            <FaUserLock alt="Profile" className="icon mx-2" onClick={() => setShowLogin(true)} />
           ) : (
-            <img
-              src={assets.profile_icon}
-              alt="Profile"
-              className="icon profile-icon"
-              onClick={() => navigate('/profile')}
-            />
+            // <img
+            //   src={assets.profile_icon}
+            //   alt="Profile"
+            //   className="icon profile-icon"
+            //   onClick={() => navigate('/profile')}
+            // />
+            <NavDropdown className='profile-dropdown' title={
+              // <img src={assets.profile_icon} alt="Profile" className="profile-icon" />
+              <FaUserCheck alt="Profile" className="icon mx-2" /> 
+              } id="profile-dropdown">
+                <NavDropdown.Item onClick={() => navigate('/profile')}>
+                  {/* <img src={assets.bag_icon} alt="My Profile" /> */}
+                  <FaUserCheck alt="My Profile"   />  My Profile
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => logout()}>
+                  {/* <img src={assets.logout_icon} alt="Logout" /> */}
+                  <IoMdLogOut alt="Logout"/>
+                   Logout
+                </NavDropdown.Item>
+              </NavDropdown>
           )}
         </div>
 
@@ -62,26 +88,39 @@ const NavbarComponent = ({ setShowLogin }) => {
           <NavDropdown.Item href="#deal-1">Deal 1</NavDropdown.Item>
           <NavDropdown.Item href="#deal-2">Deal 2</NavDropdown.Item>
         </NavDropdown>
-        <Nav.Link href="#explore-menu" className="nav-link" onClick={() => setMenu('menu')}>About Us</Nav.Link>
-        <Nav.Link href="#footer" className="nav-link" onClick={() => setMenu('contact-us')}>Contact Us</Nav.Link>
+        <Nav.Link as={Link} to="/myorders" className={`nav-link ${menu === 'orders' ? 'active' : ''}`} onClick={() => setMenu('orders')}>Order History</Nav.Link>
+        <Nav.Link as={Link} to="/aboutus" className={`nav-link ${menu === 'aboutus' ? 'active' : ''}`} onClick={() => setMenu('aboutus')}>About Us</Nav.Link>
+        
       </Nav>
 
       <Nav className="d-lg-flex desktop-icons d-sm-none align-items-center">
-        <img src={assets.search_icon} alt="Search" className="icon" />
-        <Link to="/add-extra">
-          <img src={assets.basket_icon} alt="Cart" className="icon" />
+        {/* <img src={assets.search_icon} alt="Search" className="icon mx-2" /> */}
+        <FaSearch alt="Cart" className="icon mx-2"/>
+        
+        <Link 
+        onClick={() => handleAddToCartAndRedirect(id)}
+        >
+          {/* <img src={assets.basket_icon} alt="Cart" className="icon mx-2" /> */}
+          <FaShoppingCart alt="Cart" className="icon mx-2"/>
           <div className={getTotalCartAmount() === 0 ? '' : 'dot'}></div>
         </Link>
 
         {!token ? (
-          <img src={assets.profile_icon1} alt="Profile" className="icon" onClick={() => setShowLogin(true)} />
+          // <img src={assets.profile_icon1} alt="Profile" className="icon mx-2" onClick={() => setShowLogin(true)} />
+          <FaUserLock alt="Profile" className="icon mx-2" onClick={() => setShowLogin(true)} />
         ) : (
-          <NavDropdown title={<img src={assets.profile_icon} alt="Profile" className="profile-icon" />} id="profile-dropdown">
+          <NavDropdown className='profile-dropdown' title={
+          // <img src={assets.profile_icon} alt="Profile" className="profile-icon" />
+          <FaUserCheck alt="Profile" className="icon mx-2" /> 
+          } id="profile-dropdown">
             <NavDropdown.Item onClick={() => navigate('/profile')}>
-              <img src={assets.bag_icon} alt="My Profile" /> My Profile
+              {/* <img src={assets.bag_icon} alt="My Profile" /> */}
+              <FaUserCheck alt="My Profile"   />  My Profile
             </NavDropdown.Item>
             <NavDropdown.Item onClick={() => logout()}>
-              <img src={assets.logout_icon} alt="Logout" /> Logout
+              {/* <img src={assets.logout_icon} alt="Logout" /> */}
+              <IoMdLogOut alt="Logout"/>
+               Logout
             </NavDropdown.Item>
           </NavDropdown>
         )}

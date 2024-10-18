@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ReviewModal.css'; // Create a CSS file for styling
+import { Button } from 'react-bootstrap';
 
 const ReviewModal = ({ onClose, onSubmit, foodIds }) => {
     const [rating, setRating] = useState(0);
@@ -12,12 +13,12 @@ const ReviewModal = ({ onClose, onSubmit, foodIds }) => {
     };
 
     return (
-        <div className="review-modal">
+        <div className="review-modal text-center">
             <div className="review-modal-content">
-                <h3>Add Your Review for All Items</h3>
+                <h3>Review</h3>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Rating:</label>
+                        
                         <div>
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <span
@@ -31,16 +32,16 @@ const ReviewModal = ({ onClose, onSubmit, foodIds }) => {
                         </div>
                     </div>
                     <div>
-                        <label>Comment:</label>
+                        
                         <textarea
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
                             required
                         />
                     </div>
-                    <button type="submit">Submit Review</button>
+                    <Button variant="warning"  className='review-header-button' type="submit">Submit</Button>
                 </form>
-                <button onClick={onClose}>Close</button>
+                {/* <button onClick={onClose}>Close</button> */}
             </div>
         </div>
     );

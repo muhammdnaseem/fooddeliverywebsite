@@ -30,7 +30,7 @@ const listDeal = async (req, res) => {
     try {
       const deals = await dealModel.find({})
         .populate({
-          path: 'dealproduct', // Assuming 'dealproduct' references another collection
+          path: 'food', // Assuming 'dealproduct' references another collection
           select: 'name image sizes', // Select relevant fields
         });
   

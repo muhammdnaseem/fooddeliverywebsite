@@ -16,7 +16,7 @@ const ProductCategories = () => {
   return (
     <div>
       
-      <Deals limit={1} />
+     
       <Search onSearch={handleSearch} />
       <FoodDisplay category={category} searchTerm={searchTerm} />
       {/* <Categories category={category} setCategory={setCategory}/> */}

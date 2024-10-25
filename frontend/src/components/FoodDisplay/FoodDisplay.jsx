@@ -2,14 +2,44 @@ import React, { useContext, useState } from 'react';
 import './FoodDisplay.css';
 import { StoreContext } from '../context/StoreContext';
 import FoodItem from '../FoodItem/FoodItem';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Breadcrumb } from 'react-bootstrap';
+import { IoIosArrowForward } from "react-icons/io";
+import BreadcrumbNav from '../BreadcrumbNav/BreadcrumbNav';
 
 const FoodDisplay = ({ searchTerm = '' }) => {
-  const { food_list = [], category_list = [] } = useContext(StoreContext);
+  const { food_list = [], category_list = [], getTotalCartAmount, cartItems, updateBreadcrumbs, breadcrumbItems } = useContext(StoreContext);
+
+  const [categoryName, setCategoryName] = useState('All Items');
+ 
   const [selectedCategory, setSelectedCategory] = useState('All');
   const url = "http://localhost:4000"; // Base URL for images
 
-  const handleCategoryChange = (category) => setSelectedCategory(category);
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    const name =
+      category === 'All'
+        ? 'All Items'
+        : category_list.find((cat) => cat._id === category)?.categoryname || 'Category';
+    setCategoryName(name);
+
+
+    // Create a new breadcrumb item for the selected category
+    const newBreadcrumb = { label: name, href: '/categories' };
+
+    // Update the breadcrumbs in context
+    updateBreadcrumbs((prevBreadcrumbs) => [
+      ...prevBreadcrumbs.filter(item => item.label !== name), // Remove any existing category breadcrumb
+      newBreadcrumb, // Add the new active category
+    ]);
+
+    
+  };
+
+
+
+
+
+
 
   // Filter food items based on selected category and search term
   const filteredFoodItems = food_list.filter((item) => {
@@ -23,13 +53,18 @@ const FoodDisplay = ({ searchTerm = '' }) => {
     return matchesCategory && matchesSearch && !excludedCategories.includes(item.category);
   });
 
+ 
   return (
     <Container className='my-3'>
+       <BreadcrumbNav /> 
       <div className="food-display" id="food-display">
-        <h2 className="text-center">Our Menu</h2>
+     
+
+
 
         {/* Category Buttons */}
         <div className="category-buttons d-flex justify-content-start flex-wrap mb-4">
+
           <button
             className={selectedCategory === 'All' ? 'active' : ''}
             onClick={() => handleCategoryChange('All')}
@@ -37,7 +72,7 @@ const FoodDisplay = ({ searchTerm = '' }) => {
             All
           </button>
           {category_list
-            .filter((category) => category.categoryname !== 'Extra') // Exclude "Extra"
+            .filter((category) => category.categoryname !== 'Extra') 
             .map((category) => (
               <button
                 key={category._id}

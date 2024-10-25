@@ -2,14 +2,34 @@ import userModel from './../models/userModel.js';
 
 const addToCart = async (req, res) => {
     try {
-        const { userId, itemId, selectedSizes } = req.body; // Destructure userId and itemId from the request body
+        const { userId, itemId, selectedSize } = req.body;
 
         // Fetch the user's data
         let userData = await userModel.findById(userId);
-        let cartData = userData.cartData || { items: {}, selectedSizes: {} }; // Initialize cartData if it doesn't exist
 
-        // Build the key for the cart item
-        const itemKey = `${itemId}-${cartData.selectedSizes[itemId]}`; // Default size is "Regular" if not set
+        if (!userData) {
+            console.error(`User with ID ${userId} not found.`);
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        // Initialize cartData if it doesn't exist
+        let cartData = userData.cartData || { items: {}, selectedSizes: {} };
+
+        // Validate input
+        if (!itemId || !selectedSize) {
+            console.error('Invalid itemId or selectedSize:', { itemId, selectedSize });
+            return res.status(400).json({ success: false, message: 'Invalid itemId or selectedSize' });
+        }
+
+        // Set or update the selected size for the item
+        cartData.selectedSizes[itemId] = selectedSize;
+
+        // Ensure items property is initialized
+        cartData.items = cartData.items || {};
+
+        // Ensure selectedSize has a valid identifier
+        const sizeId = selectedSize.id || selectedSize.name || selectedSize; // Modify this line
+        const itemKey = `${itemId}-${sizeId}`;
 
         // Add or update the item quantity in the items object
         if (!cartData.items[itemKey]) {
@@ -24,28 +44,52 @@ const addToCart = async (req, res) => {
         res.json({ success: true, message: 'Added to cart' });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: 'Error' });
+        res.status(500).json({ success: false, message: 'Error adding to cart' });
     }
 };
 
 
-// remove items to user cart
-const removeFromCart = async (req, res) =>{
-    try {
-        let userData = await userModel.findById(req.body.userId)
-        let cartData = await userData.cartData;
 
-        if(cartData[req.body.itemId]>0){
-            cartData[req.body.itemId] -=1;
+
+
+
+// remove items to user cart
+const removeFromCart = async (req, res) => {
+    try {
+        const { userId, itemId } = req.body;
+        
+        let userData = await userModel.findById(userId);
+        
+        if (!userData) {
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        await userModel.findByIdAndUpdate(req.body.userId,{cartData});
-        res.json({success:true,message:'Removed from cart'});
+        let cartData = userData.cartData || { items: {}, selectedSizes: {} };
+
+        // Build the key for the cart item
+        const itemKey = `${itemId}-${cartData.selectedSizes[itemId]}`;
+
+        // Check if the item exists in the cart
+        if (cartData.items[itemKey]) {
+            cartData.items[itemKey] -= 1;
+
+            // If quantity is zero or less, remove the item from the cart
+            if (cartData.items[itemKey] <= 0) {
+                delete cartData.items[itemKey];
+                delete cartData.selectedSizes[itemId];
+            }
+        } else {
+            return res.status(400).json({ success: false, message: 'Item not found in cart' });
+        }
+
+        await userModel.findByIdAndUpdate(userId, { cartData }, { new: true });
+
+        res.json({ success: true, message: 'Removed from cart' });
     } catch (error) {
-        console.log(error) ;
-       res.json({success:false,message:'Error'});
+        console.log(error);
+        res.status(500).json({ success: false, message: 'Error removing from cart' });
     }
-}
+};
 
 // update items to user cart
 // update items in user cart when size is changed
@@ -85,16 +129,53 @@ const updateCart = async (req, res) => {
 
 
 // fetch user cart data
-const getCart = async (req,res) =>{
+const getCart = async (req, res) => {
     try {
-        let userData = await userModel.findById(req.body.userId)
-        let cartData = await userData.cartData;
-        res.json({success:true,cartData});
+        const userData = await userModel.findById(req.body.userId);
+        const cartData = userData.cartData;
+
+        // Initialize transformed cart items
+        const transformedItems = {};
+        const transformedSizes = {};
+
+        // Process items
+        for (const itemKey in cartData.items) {
+            const quantity = cartData.items[itemKey];
+            const [itemId, sizeKey] = itemKey.split('-'); // Split itemKey into itemId and sizeKey
+
+            transformedItems[itemId] = transformedItems[itemId] || 0; // Initialize quantity if not present
+            transformedItems[itemId] += quantity; // Aggregate quantities
+        }
+
+        // Process selected sizes
+        for (const sizeKey in cartData.selectedSizes) {
+            const selectedSize = cartData.selectedSizes[sizeKey];
+            if (typeof selectedSize === 'object') {
+                // Extract price and size if it's an object
+                transformedSizes[sizeKey] = {
+                    size: selectedSize.size,
+                    price: selectedSize.price,
+                };
+            } else {
+                // Handle cases where it's a direct value (like a size string)
+                transformedSizes[sizeKey] = selectedSize;
+            }
+        }
+
+        // Structure the final cart data
+        const finalCartData = {
+            items: transformedItems,
+            selectedSizes: transformedSizes,
+        };
+
+        
+        res.json({ success: true, cartData: finalCartData });
     } catch (error) {
-        console.log(error) ;
-        res.json({success:false,message:'Error'});
+        console.log(error);
+        res.json({ success: false, message: 'Error' });
     }
-}
+};
+
 
 
 export {addToCart, removeFromCart, getCart, updateCart}

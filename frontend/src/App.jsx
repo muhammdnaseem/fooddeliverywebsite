@@ -13,6 +13,7 @@ import Cart from './pages/Cart/Cart'
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import Footer from './components/Footer/Footer'
 import LoginPopup from './components/LoginPopup/LoginPopup'
+import SuccessPage from './components/ConfirmationAlert/SuccessPage'
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
 import Products from './pages/Products/ProductCategories'
@@ -37,6 +38,7 @@ const App = () => {
       <NavbarComponent setShowLogin={setShowLogin}/>
       <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/success_page' element={<SuccessPage />} />
         <Route path='/success' element={<Sucess />} />
             <Route path='/order' element={<PlaceOrder />} />
             <Route path="/auth/google/callback" element={<GoogleAuthHandler />} />

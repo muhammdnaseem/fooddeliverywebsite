@@ -8,6 +8,7 @@ import Deal from '../../components/Deal/Deal'
 
 import Deals from '../../components/Deals/Deals'
 import Testimonials from '../../components/Testimonials/Testimonials'
+import Recommended from '../../components/Recomended/Recomended'
 
 
 const Home = () => {
@@ -34,6 +35,8 @@ const Home = () => {
       <ExploreMenu category={category} setCategory={setCategory}/>
 
       <Deals />
+
+      <Recommended/>
 
       <Testimonials/>
       {/* <SeasonalFlavour /> */}

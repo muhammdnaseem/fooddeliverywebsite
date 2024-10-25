@@ -10,7 +10,7 @@
 
 .navbar .active{
    
-    border-bottom: 2px solid #49557e;
+    border-bottom: 2px solid #D43734;
 }
 
 
@@ -23,14 +23,23 @@
 
 
 
-.navbar-search-icon .dot{
+.desktop-icons .dot{
     position: absolute;
     min-width: 10px;
     min-height: 10px;
-    background-color: tomato;
+    background: transparent;
     border-radius: 5px;
-    top: -8px;
-    right: -8px;
+    margin: -12px 0 0 0 !important;
+    color: black;
+}
+.mobile-icons .dot{
+    position: absolute;
+    min-width: 10px;
+    min-height: 10px;
+    background: transparent;
+    border-radius: 5px;
+    margin: -12px 0 0 0 !important;
+    color: black;
 }
 
 .navbar-profile{
@@ -113,20 +122,20 @@ a#profile-dropdown.dropdown-toggle.nav-link{
 
 /* Add padding to the nav links */
 .navbar .nav-link {
-    padding: 10px 30px !important; /* Adjust padding to cover area */
+    padding: 3px 30px !important; /* Adjust padding to cover area */
     display: inline-block; /* Ensures the padding applies properly */
     color: #000; /* Default color for links */
     transition: background-color 0.3s ease; /* Smooth hover transition */
 }
 
 .navbar .nav-link:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Add hover effect */
-    border-radius: 5px; /* Optional: add rounding for better aesthetics */
+    
+    border-bottom: 2px solid #D43734;
 }
 
 .navbar .active {
   
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #D43734;
 }
 
 /* Add padding and border for dropdown links */

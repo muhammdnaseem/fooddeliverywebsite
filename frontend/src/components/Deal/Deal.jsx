@@ -27,7 +27,7 @@ const Deal = () => {
   return (
     <>
       {/* The Modal (Popup) */}
-      <Modal  show={showPopup} onHide={handleClose} centered size="lg-md sm-sm">
+      <Modal className=''  show={showPopup} onHide={handleClose} centered size="lg-md sm-sm">
         <div className='deal-popup-container'>
         <Modal.Header closeButton>
           

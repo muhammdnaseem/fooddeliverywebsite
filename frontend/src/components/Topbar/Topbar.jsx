@@ -36,7 +36,8 @@ const Topbar = () => {
           {/* Right Section - Location Info with Icon */}
           <div className="navbar-location d-flex align-items-center">
             <Button
-            variant="danger"
+            className='franchise'
+            style={{background: '#f8c400'}}
             onClick={() => navigate('/franchise')}
             >
               FRANCHISE

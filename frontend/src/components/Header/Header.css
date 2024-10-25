@@ -61,12 +61,12 @@ Button.header-button {
     z-index: 1; /* Make sure it's above the header background */
     transition: transform 0.5s ease-in-out; 
 }
+/* Use this updated animation class in your slide-out */
 .slide-out {
-    transform: translate(100%, -50%); /* Move to the right */
+    animation: slide-down-left 0.5s forwards; /* Call the updated animation */
 }
 
 .slide-in {
-    transform: translate(-50%, -50%); /* Bring in from the left */
     animation: slide-in 0.5s forwards; /* Optional: use animation for extra effect */
 }
 
@@ -167,9 +167,27 @@ Button.header-button {
       }
 }
 
+/* Keyframes for the slide-down animation */
+@keyframes slide-down-left {
+    0% {
+        transform: translate(0, 0); /* Original position */
+        margin-right: 250px; /* Start position */
+    }
+    50% {
+        transform: translate(-50px, 100px); /* Move down and to the left */
+        margin-right: 230px; /* Adjust as needed for the left shift */
+    }
+    100% {
+        transform: translate(-100px, 100px); /* End position (further down and left) */
+        margin-right: 200px; /* Final adjustment for the left position */
+    }
+    
+}
+
+/* Keyframes for the slide-in animation */
 @keyframes slide-in {
     0% {
-        transform: translate(-100%, -50%); /* Start from the left */
+        transform: translate(100%, -50%); /* Start from the right */
     }
     100% {
         transform: translate(-50%, -50%); /* End at the center */

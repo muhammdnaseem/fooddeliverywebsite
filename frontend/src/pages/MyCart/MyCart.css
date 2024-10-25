@@ -1,6 +1,7 @@
 .cart {
     width: 80%;
     margin: auto;
+    margin-top: 20px !important;
     font-family: Arial, sans-serif;
   }
   

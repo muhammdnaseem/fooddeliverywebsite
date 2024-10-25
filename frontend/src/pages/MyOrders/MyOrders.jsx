@@ -4,16 +4,21 @@ import { StoreContext } from './../../components/context/StoreContext';
 import axios from 'axios';
 import { assets } from './../../assets/assets';
 import ReviewModal from './ReviewModal';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
+import BreadcrumbNav from '../../components/BreadcrumbNav/BreadcrumbNav';
 
 const MyOrders = () => {
-    const { url, token } = useContext(StoreContext);
+    const { url, token, updateBreadcrumbs } = useContext(StoreContext);
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedFoodIds, setSelectedFoodIds] = useState([]); // Change to an array
 
     const fetchOrders = async () => {
-        const response = await axios.post(url + '/api/order/userorders', {}, { headers: { token } });
+        
+            const response = await axios.post(url + '/api/order/userorders', {}, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
         setData(response.data.data);
     };
 
@@ -21,7 +26,14 @@ const MyOrders = () => {
         if (token) {
             fetchOrders();
         }
-    }, [token]);
+
+        const newBreadcrumb = { label: 'My Orders', href: '/my-orders' };
+
+    updateBreadcrumbs((prevBreadcrumbs) => [
+      ...prevBreadcrumbs.filter(item => item.label !== 'My Orders'), // Remove any existing category breadcrumb
+      newBreadcrumb, // Add the new active category
+    ]);
+    }, [token, updateBreadcrumbs]);
 
     const handleAddReview = (foodIds) => {
         setSelectedFoodIds(foodIds); // Set food IDs for review
@@ -52,11 +64,21 @@ const MyOrders = () => {
         }
     };
 
+    const handleAddPayment = () => {
+        // Logic to add payment
+        console.log("Payment process initiated");
+    };
+    
+
     return (
         <div className='my-orders'>
+            <Container>
+            <BreadcrumbNav  /> 
+            </Container>
+              
            
-            <div className="container">
-            <h2 className='mb-5'>My Orders</h2>
+            <div className="container mt-3">
+            
                 {data.map((order, index) => (
                     <div key={index} className="my-orders-order">
                         <img src={assets.parcel_icon} alt="" />
@@ -69,7 +91,17 @@ const MyOrders = () => {
                         ))}</p>
                         <p>${order.amount}.00</p>
                         <p>Items: {order.items.length}</p>
-                        <p><b>{order.status}</b></p>
+                        <p>
+                        {order.payment ? "Paid" : 
+                        <Button 
+                        onClick={handleAddPayment}
+                        variant="warning" className='review-header-button'
+                        >
+                            Add Payment
+                            </Button>}
+                        <b style={{marginLeft: '5px'}}>{order.status}</b></p>
+                        
+
                         {order.status === 'Delivered' && (
                             <Button  variant="warning" className='review-header-button' onClick={() => handleAddReview(order.items.map(item => item._id))}>
                                 Add Reviews 

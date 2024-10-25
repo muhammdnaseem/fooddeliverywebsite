@@ -8,6 +8,7 @@ import { FaMinus } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate, useLocation } from 'react-router-dom';
 import FoodItem from '../../components/FoodItem/FoodItem';
+import BreadcrumbNav from '../../components/BreadcrumbNav/BreadcrumbNav';
 
 const AddExtra = () => {
   const {
@@ -18,11 +19,15 @@ const AddExtra = () => {
     getTotalCartAmount,
     selectedSizes,
     handleSizeChange,
-    url
+    url,
+    updateBreadcrumbs,
+    breadcrumbItems
   } = useContext(StoreContext);
 
-  const location = useLocation(); // Access location object
-  const selectedItemId = location.state?.itemId; // Extract itemId from state
+  const location = useLocation(); 
+  const selectedItemId = location.state?.itemId; 
+
+
 
   const navigate = useNavigate(); // Initialize navigate
   const [selectedSpicyLevel, setSelectedSpicyLevel] = useState("Mild"); // Default spicy level
@@ -30,6 +35,7 @@ const AddExtra = () => {
   const [selectedAddon, setSelectedAddon] = useState(null); // State for selected addon
   const [selectedDrink, setSelectedDrink] = useState(null); // State for selected drink
   const [relatedItems, setRelatedItems] = useState([]);
+  
 
     // Calculate Related Items whenever the cart or food_list changes
     useEffect(() => {
@@ -42,28 +48,39 @@ const AddExtra = () => {
       );
   
       setRelatedItems(related.slice(0, 5)); // Limit to 5 related items
+
+      
   }, [cartItems, food_list]);
 
   useEffect(() => {
-    // Setting default size selections when component mounts
+    
     food_list.forEach((item) => {
       if (item.sizes.length > 0 && !selectedSizes[item._id]) {
         handleSizeChange(item._id, selectedSizes[item._id], item.sizes[0].size); // Set first size as selected if not already set
       }
     });
 
-    // Setting default extra selection
+    
     const firstExtra = food_list.find(item => item.category === '6700f136ded0621ea8687d74');
     if (firstExtra && !selectedExtra) {
-      setSelectedExtra(firstExtra._id); // Set the first extra as selected
-      addToCart(firstExtra._id, 1); // Add the first extra to cart
+      setSelectedExtra(firstExtra._id); 
+      addToCart(firstExtra._id, 1); 
     }
-  }, [food_list, selectedSizes, selectedExtra, addToCart, handleSizeChange]);
 
-  // Handle spicy level change
+    
+
+    // const newBreadcrumb = { label: 'Add Extra', href: '/add-extra', active: true };
+
+    // updateBreadcrumbs((prevBreadcrumbs) => [
+    //   ...prevBreadcrumbs.filter(item => item.label !== 'Add Extra'), // Remove any existing category breadcrumb
+    //   newBreadcrumb, // Add the new active category
+    // ]);
+  }, [food_list, selectedSizes, selectedExtra, addToCart, handleSizeChange,]);
+
+  
   const handleSpicyChange = (level) => setSelectedSpicyLevel(level);
 
-  // Get the price for the selected size
+  
   const getPriceForSize = (item, size) => {
     const sizeObj = item.sizes.find((s) => s.size === size);
     return sizeObj ? sizeObj.price : 0;
@@ -89,16 +106,26 @@ const AddExtra = () => {
   const handleDrinkSelection = (drinkId) => {
     setSelectedDrink(drinkId); // Set the selected drink
   };
+  console.log(cartItems);
 
   return (
     <div className='add-extra p-2'>
+<Container>
+<BreadcrumbNav /> 
+</Container>
+      
+           
       
       {/* Cart Items Section */}
       <div className="add-extra-items">
-        {Object.keys(cartItems).map((itemId) => {
+        
+        {Object.entries(cartItems.items)
+       .map(([itemId, quantity]) => {
+            
           if (itemId === selectedItemId) {
+           
             const item = food_list.find((food) => food._id === itemId);
-            if (!item || cartItems[itemId] <= 0) return null; // Skip if item is not in cart
+            if (!item || cartItems[itemId] <= 0) return null; 
 
             const selectedSize = selectedSizes[itemId] || (item.sizes.length > 0 ? item.sizes[0].size : 'Regular');
             const priceForSelectedSize = getPriceForSize(item, selectedSize);
@@ -107,8 +134,8 @@ const AddExtra = () => {
               <div key={itemId} className="cart-item">
                 <Container className='p-4'>
 
-                  <Row className="add-extra-items-title add-extra-items-item align-items-center g-5">
-                    {/* Image Section */}
+                  <Row className="add-extra-items-title add-extra-items-item align-items-center g-5 mx-auto">
+                   
                     <Col xs={12} md={6} className="text-center">
                       <img
                         src={`${url}/images/${item.image}`}
@@ -118,7 +145,7 @@ const AddExtra = () => {
                     </Col>
 
                     {/* Item Details Section */}
-                    <Col xs={12} md={6} className="d-flex flex-column align-items-center align-items-md-start">
+                    <Col xs={12} md={6} className="d-flex flex-column align-items-center align-items-md-start pl-lg-5">
                       <p className="item-name text-center text-md-start">{item.name}</p>
                       <p className="item-price text-center text-md-start">${priceForSelectedSize.toFixed(2)}</p>
                       <p className="item-desc text-center text-md-start">{item.description}</p>
@@ -130,7 +157,7 @@ const AddExtra = () => {
                           onClick={() => removeFromCart(itemId)}
                           style={{ cursor: 'pointer', color: 'black' }}
                         />
-                        <p className="mt-3">{cartItems[itemId]}</p>
+                        <p className="mt-3">{quantity}</p>
                         <IoMdAdd
                           className="quantity-btn"
                           onClick={() => addToCart(itemId)}
@@ -149,9 +176,9 @@ const AddExtra = () => {
                 {/* Size Selection */}
                 <Container fluid className='size-selection p-5'>
                   <Row>
-                    <h4>Combo Size</h4>
+                    
                     {item.sizes.map((sizeObj) => (
-                      <Col key={sizeObj.size} lg={4} className="size-option mx-2 ">
+                      <Col key={sizeObj.size} lg={3} className="size-option mx-2 ">
                         <input
                           type="radio"
                           name={`size-${itemId}`} // Group sizes by item ID
@@ -184,43 +211,9 @@ const AddExtra = () => {
         })}
       </div>
 
-      {/* Options Sections - Rendered Only Once */}
-      <Container className='py-5 pt-5'>
-        {/* Dip Selection */}
-        <h3>Choose your Dip</h3>
-        <Row className='p-5 p-sm-0'>
-          {food_list
-            .filter((item) => item.category === '6700f136ded0621ea8687d74')
-            .map((extra) => (
-              <Col key={extra._id} lg={6} className="extra-item d-flex align-items-center">
-                <div className='my-3'>
-                <input
-                  type="radio"
-                  name="dipSelection"
-                  value={extra._id}
-                  checked={selectedExtra === extra._id}
-                  onChange={() => handleExtraSelection(extra._id)}
-                  className="extra-custom-radio"
-                />
-                 <img
-                            src={`${url}/images/${extra.image}`}
-                            alt={extra.name}
-                            className="extra-item-image mx-3"
-                          />
-                  <span className="dip-label ">
-                    {extra.name}
-                   
-                    <span className='mx-2'>
-                      {extra.price ? `$${extra.price.toFixed(2)}` : '$5'}
-                    </span>
-                  </span>
-                  </div>
-              </Col>
-            ))}
-        </Row>
-      </Container>
 
-      <Container className='pt-0 mt-0'>
+
+      <Container className='pt-0 mt-0 px-lg-5'>
         {/* Spicy Level Selection */}
         <h3>Spices Option</h3>
         <div className="spicy-level-container pt-4">
@@ -242,7 +235,43 @@ const AddExtra = () => {
         </div>
       </Container>
 
-      <Container className='pt-4'>
+      {/* Options Sections - Rendered Only Once */}
+      <Container className='py-5 pt-5 px-lg-5'>
+        {/* Dip Selection */}
+        <h3>Choose your Dip</h3>
+        <Row className='p-5 p-sm-0 mt-4'>
+          {food_list
+            .filter((item) => item.category === '6700f136ded0621ea8687d74')
+            .map((extra) => (
+              <Col key={extra._id} lg={12} className="extra-item align-items-center">
+                
+                <label key={extra._id} className="spicy-label my-2">
+                <input
+                  type="radio"
+                  name="dipSelection"
+                  value={extra._id}
+                  checked={selectedExtra === extra._id}
+                  onChange={() => handleExtraSelection(extra._id)}
+                  className="extra-custom-radio"
+                />
+                 
+                  <span className="dip-label">
+                    {extra.name}
+                   
+                    <span className='mx-2 d-none'>
+                      {extra.price ? `$${extra.price.toFixed(2)}` : '$5'}
+                    </span>
+                  </span>
+                  </label>
+                
+              </Col>
+            ))}
+        </Row>
+      </Container>
+
+      
+
+      <Container className='pt-4 px-lg-5'>
         {/* Special Instructions */}
         <div className="special-instructions">
           <h3>Special Instructions</h3>
@@ -255,7 +284,7 @@ const AddExtra = () => {
       </Container>
 
       {/* Add Ons and Choose Drink Section */}
-      <Container className="addons-drinks-section">
+      <Container className="addons-drinks-section px-lg-5">
         <Row>
           {/* Add Ons Column */}
           <Col lg={6} className="addons-column">
@@ -284,12 +313,13 @@ const AddExtra = () => {
           </Col>
 
           {/* Choose Drink Column */}
-          <Col lg={6} className="drinks-column">
+          <Col lg={6} className="drinks-column px-lg-5">
             <h3>Choose Drink</h3>
             {food_list
               .filter((item) => item.category === '6700f0eaded0621ea8687d72')
               .map((drink) => (
-                <div key={drink._id}>
+                
+                  <label key={drink._id} className="spicy-label my-2">
                   <input
                     type="radio" // Changed back to radio for single selection
                     name="drinks" // Ensure all radios have the same name for grouping
@@ -299,28 +329,17 @@ const AddExtra = () => {
                     checked={selectedDrink === drink._id} // Check if this drink is selected
                     onChange={() => handleDrinkSelection(drink._id)} // Update selection
                   />
-                  <label htmlFor={`drink-${drink._id}`}>{drink.name}</label>
-                </div>
+                  
+                  {drink.name}
+                  </label>
               ))}
           </Col>
         </Row>
       </Container>
 
-      {/* View Cart Button */}
-      <Container className="view-cart-button-container mt-4 text-center">
-        <Button
-          variant="warning"
-          className="header-button "
-          onClick={() => {
-            // Logic to view the cart or proceed to checkout
-            navigate('/my-cart');
-          }}
-        >
-          View Cart
-        </Button>
-      </Container>
+     
 
-      <Container className='my-2'>
+      <Container className='my-2 px-lg-5'>
         
       <h2>Related Items</h2>
       
@@ -344,7 +363,9 @@ const AddExtra = () => {
                     variant="top"
                     src={`${url}/images/${item.image}`}
                     className="img"
-                    style={{ height: '120px', minWidth: '100%', objectFit: 'cover', border: 0, }}
+                    style={{ height: '120px', minWidth: '100%', objectFit: 'cover', border: 0,
+                      borderRadius: '40px',
+                     }}
                   />
                   <Card.Body className="text-center"
                   style={{height: '20px', overflow: 'hidden'}}>
@@ -358,6 +379,21 @@ const AddExtra = () => {
           </div>
       )}
       </Container>
+
+       {/* View Cart Button */}
+       <Container className="view-cart-button-container mt-4 text-center">
+        <Button
+          variant="warning"
+          className="header-button "
+          onClick={() => {
+            // Logic to view the cart or proceed to checkout
+            navigate('/my-cart');
+          }}
+        >
+          View Cart
+        </Button>
+      </Container>
+      
     </div>
   );
 };

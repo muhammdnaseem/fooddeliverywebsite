@@ -1,5 +1,15 @@
 import express from 'express';
-import { loginUser, registerUser, authGoogle, googleCallback, sendVerificationEmail, userDetails, userUpdate, forgotPassword, resetPassword } from '../controllers/userController.js';
+import {
+    loginUser,
+    registerUser,
+    authGoogle,
+    googleCallback,
+    sendVerificationEmail,
+    userDetails,
+    userUpdate,
+    forgotPassword,
+    resetPassword
+} from '../controllers/userController.js';
 import authMiddleware from './../middleware/auth.js';
 import passport from 'passport';
 
@@ -10,8 +20,14 @@ userRouter.post('/register', registerUser);
 userRouter.post('/login', loginUser);
 
 // Google authentication routes
-userRouter.get('/auth/google', authGoogle); // Initiate Google login
-userRouter.get('/auth/google/callback', googleCallback); // Handle callback from Google
+userRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] })); // Request profile and email scopes
+userRouter.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect(`${process.env.FRONTEND_URL}/`); // Redirect to your frontend URL
+  }
+);
 
 // Email verification
 userRouter.get('/sendEmail', sendVerificationEmail);
@@ -21,7 +37,7 @@ userRouter.post('/forgotpassword', forgotPassword);
 userRouter.post('/resetpassword', resetPassword);
 
 // User details and profile update
-userRouter.post('/details', authMiddleware, userDetails);
-userRouter.put('/updateprofile', authMiddleware, userUpdate);
+userRouter.get('/details', authMiddleware, userDetails); // Changed to GET for user details retrieval
+userRouter.patch('/update', userUpdate);
 
 export default userRouter;

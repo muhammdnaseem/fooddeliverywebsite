@@ -1,0 +1,84 @@
+/* Modal Wrapper */
+.deal-popup-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  }
+  
+  /* Modal Body Styling */
+  .deal-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #ffffff; /* Yellow Background */
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+  }
+  
+  /* Icon Circle */
+  
+  
+  .popup-check-icon svg {
+    width: 60px;
+    height: 60px;
+    color:  #dba900;
+  }
+  
+  /* Text Styling */
+  .popup-text {
+    font-weight: bold;
+    font-size: 24px;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  .popup-subtext {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  /* Button Styling */
+  .popup-button {
+    background-color:#F8C400 !important;
+    border: none;
+    padding: 20px 20px 20px 20px !important;
+    color: black;
+    font-weight: bold;
+    border-radius: 10% 10% 10% 10% !important;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  Button.header-button.confirm-order{
+    padding:  13px 25px 13px 25px !important;
+  }
+  
+  .popup-button:hover {
+    background-color: #dba900;
+    transform: scale(1.05);
+  }
+  
+  /* Close Button Styling */
+  .modal-header .btn-close {
+    background-color: #F8C400;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 750px) {
+    .modal-content {
+      margin-top: -350px;
+    }
+  }
+  

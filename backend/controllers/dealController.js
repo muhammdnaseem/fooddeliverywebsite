@@ -26,15 +26,34 @@ const addDeal = async (req,res) =>{
 
 // All deals list
 
-const listDeal = async (req,res) =>{
+const listDeal = async (req, res) => {
     try {
-        const deals = await dealModel.find({}).populate('dealproduct', 'name').populate('dealproduct', 'image');
-        res.json({success:true,data:deals})
+      const deals = await dealModel.find({})
+        .populate({
+          path: 'dealproduct', // Assuming 'dealproduct' references another collection
+          select: 'name image sizes', // Select relevant fields
+        });
+  
+      // Extract the price from the populated 'sizes' array
+      const formattedDeals = deals.map(deal => {
+        const product = deal.dealproduct;
+        const dealprice = product?.sizes?.[0]?.price || 'N/A'; // Get the first size's price, handle undefined
+
+        return {
+          ...deal._doc, // Keep other deal properties intact
+          productName: product?.name,
+          productImage: product?.image,
+          productPrice: dealprice,
+        };
+      });
+  
+      res.json({ success: true, data: formattedDeals });
     } catch (error) {
-        console.log(error)
-        res.json({success:false, message:'Error'})
+      console.log(error);
+      res.json({ success: false, message: 'Error' });
     }
-}
+  };
+  
 
 // remove deal iDeal
 const removeDeal = async (req,res)=>{

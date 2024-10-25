@@ -14,6 +14,12 @@
     text-align: center;
     
   }
+.deal-popup.modal-body{
+  background: #FFD63D;
+}
+  .deal-popup-container{
+    background: #FFD63D;
+  }
   
   .popup-content {
     position: relative;
@@ -37,9 +43,10 @@
   }
   
   .popup-deal-text {
-    font-weight: 600;
-    font-size: 22px;
+    font-weight: 800;
+    font-size: 25px;
     margin-bottom: 20px;
+    color: #665618;
   }
   
   Button.popup-deal-button {
@@ -85,6 +92,7 @@
   }
   @media (max-width: 750px) {
     .modal-content{
-      margin-top: -350px;
+      margin-top: -0px !important;
     }
+   
   }

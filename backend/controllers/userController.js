@@ -14,6 +14,7 @@ dotenv.config();
 const createToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '24d' });
 
 // Login user
+// Login user
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -24,28 +25,35 @@ const loginUser = async (req, res) => {
         if (!isMatch) return res.status(401).json({ success: false, message: 'Invalid credentials' });
 
         const token = createToken(user._id);
-        res.status(200).json({ success: true, token });
+        res.status(200).json({ success: true, message: 'Login successful', token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
 
+
+// Register user
 // Register user
 const registerUser = async (req, res) => {
     const { name, password, email } = req.body;
+
     try {
+        // Check if user already exists
         if (await userModel.findOne({ email })) {
             return res.status(409).json({ success: false, message: 'User already exists' });
         }
 
+        // Validate email and password
         if (!validator.isEmail(email)) return res.status(400).json({ success: false, message: 'Invalid email' });
         if (password.length < 8) return res.status(400).json({ success: false, message: 'Password too short' });
 
+        // Hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const verificationToken = crypto.randomBytes(20).toString('hex');
 
+        // Create new user
         const newUser = new userModel({
             name,
             email,
@@ -54,16 +62,23 @@ const registerUser = async (req, res) => {
             verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000,
         });
 
-        const user = await newUser.save();
-        await sendVerificationEmail(email, verificationToken);
+        // Save user to the database
+        await newUser.save();
 
-        const token = createToken(user._id);
-        res.status(201).json({ success: true, token });
+        // Send verification email
+        sendVerificationEmail(email, verificationToken).catch(error => {
+            console.error('Error sending verification email:', error);
+        });
+
+        // Create JWT token and return response
+        const token = createToken(newUser._id);
+        res.status(201).json({ success: true, message: 'Registration successful. Please verify your email.', token });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Error registering user' });
     }
 };
+
 
 // Send verification email
 const sendVerificationEmail = async (email, verificationToken) => {
@@ -142,60 +157,64 @@ const resetPassword = async (req, res) => {
 };
 
 // Get user details
+// Get user details
 const userDetails = async (req, res) => {
     try {
         const user = await userModel.findById(req.body.userId);
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
-        res.status(200).json({ success: true, data: user });
+        // Only send back non-sensitive data
+        const { password, ...userData } = user.toObject(); // Convert mongoose doc to plain object
+        res.status(200).json({ success: true, data: userData });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Error fetching user details' });
     }
 };
 
+
+
 // Update user details
 const userUpdate = async (req, res) => {
-    const { userId, ...updatedData } = req.body;
+    const { userId, password, ...updatedData } = req.body; // Destructure password from request body
+
     try {
+        // Check if a new password is provided
+        if (password) {
+            const salt = await bcrypt.genSalt(10); // Generate a salt for hashing
+            updatedData.password = await bcrypt.hash(password, salt); // Hash the new password
+        }
+
         const user = await userModel.findByIdAndUpdate(userId, updatedData, { new: true });
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
-        res.status(200).json({ success: true, data: user });
+        // Exclude password from the response
+        const { password: _, ...userData } = user.toObject(); // Convert mongoose doc to plain object
+        res.status(200).json({ success: true, data: userData }); // Return updated user data without password
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Error updating user' });
     }
 };
 
-// Google OAuth Strategy Setup
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: 'http://localhost:5173/auth/google/callback',
-        },
-        async (accessToken, refreshToken, profile, done) => {
-            try {
-                const existingUser = await userModel.findOne({ googleId: profile.id });
-                if (existingUser) return done(null, existingUser);
 
-                const newUser = new userModel({
-                    googleId: profile.id,
-                    name: profile.displayName,
-                    email: profile.emails[0].value,
-                    profilePicture: profile.photos[0].value,
-                });
+// passport.js
 
-                const savedUser = await newUser.save();
-                done(null, savedUser);
-            } catch (error) {
-                done(error, false);
-            }
-        }
-    )
-);
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: `http://localhost:5173/auth/google/callback`, // Ensure callback URL matches your frontend
+  },
+  async (accessToken, refreshToken, profile, cb) => {
+    try {
+      const user = await User.findOrCreate({ googleId: profile.id });
+      return cb(null, user);
+    } catch (err) {
+      return cb(err, null);
+    }
+  }
+));
 
 
 // Google authentication routes
@@ -212,6 +231,7 @@ export {
     sendVerificationEmail,
     forgotPassword,
     resetPassword,
+    
     userDetails,
     userUpdate,
     authGoogle,

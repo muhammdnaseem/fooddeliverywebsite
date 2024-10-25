@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const FoodItem = ({ id, name, category, sizes, description, image, reviews }) => {
   const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
+  
+
   const navigate = useNavigate();
   const [showComments, setShowComments] = useState(false); // Manage comments visibility
 
@@ -37,11 +39,19 @@ const FoodItem = ({ id, name, category, sizes, description, image, reviews }) =>
     return stars;
   };
 
-  // Handle adding to cart and redirecting to AddExtra with itemId as state
-  const handleAddToCartAndRedirect = (itemId) => {
-    addToCart(itemId); // Add item to cart
-    navigate('/add-extra', { state: { itemId } }); // Redirect and pass itemId as state
+  const handleAddToCartAndRedirect = async (itemId, defaultSize) => {
+    try {
+      const response = await addToCart(itemId, defaultSize); // Wait for the response from addToCart
+      console.log('Add to cart response:', response); // Log the response
+
+      // Redirect to /add-extra and pass itemId and size as state
+      navigate('/add-extra', { state: { itemId, size: defaultSize } });
+    } catch (error) {
+      console.error('Failed to add item to cart:', error); // Log any errors from addToCart
+    }
   };
+
+
 
   return (
     <div className='food-item '>
@@ -70,16 +80,16 @@ const FoodItem = ({ id, name, category, sizes, description, image, reviews }) =>
           <Col lg={6} sm={6} md={6}>
             <div
               className="order-button text-black"
-              onClick={() => handleAddToCartAndRedirect(id)}
+              onClick={() => handleAddToCartAndRedirect(id, sizes[0])}
               style={{ cursor: 'pointer' }}
             >
               Order Now
             </div>
           </Col>
-          <Col lg={6} sm={6} md={6} className="text-end">
+          <Col lg={6} sm={6} md={6} className="add text-end">
             <FaArrowRight
               className="add"
-              onClick={() => handleAddToCartAndRedirect(id)}
+              onClick={() => handleAddToCartAndRedirect(id, sizes[0])}
               style={{ cursor: 'pointer', color: 'black' }}
             />
           </Col>

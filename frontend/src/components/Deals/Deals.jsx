@@ -1,82 +1,94 @@
 import React, { useContext } from 'react';
 import './Deals.css';
 import { StoreContext } from '../context/StoreContext';
-import { Container, Row, Col } from 'react-bootstrap';
+import Slider from '../Slider/Slider';
 
 const Deals = ({ limit }) => {
   const { deal_list = [] } = useContext(StoreContext);
 
   if (deal_list.length === 0) {
-    return <div>Loading...</div>; // or some placeholder
+    return <div>Loading...</div>;
   }
 
-  // Use the limit prop to slice the deal_list
   const dealsToDisplay = deal_list.slice(0, limit);
 
-  return (
-    <Container className="best-deals">
-      <h2 className={`deals-title text-start ${limit === 1 && 'd-none'}`}>Best Deals</h2>
+  const sliderData = dealsToDisplay.map(item => ({
+    image: item.dealproduct.image,
+    imageFolder: "images",
+    productname: item.dealproduct.name,
+    title: item.dealtitle,
+    offpercentage: item.offpercentage,
+    price: item.dealproduct.sizes?.[0]?.price ?? 'N/A',
+    dealdescription: item.dealdescription
+  }));
 
-      <Row className="mt-4">
-        {dealsToDisplay.map((item, index) => (
-          <Col
-            key={item._id}
-            className={`mb-4 ${index === 0 ? 'col-12 first-deal' : 'col-lg-6'}`}
-          >
-            <div
-              className={`deal-card ${index === 0 ? 'big-deal' : 'small-deal'}`}
-              style={
-                index > 0
-                  ? {
-                      backgroundImage: `url(http://localhost:4000/images/${item.dealproduct.image})`,
-                    }
-                  : {}
-              }
-            >
-              {index === 0 ? (
-                // Big Deal Structure
-                <>
-                  <div className="deal-image-container">
-                    <img
-                      src={`http://localhost:4000/images/${item.dealproduct.image}`}
-                      alt={item.dealtitle}
-                      className="deal-image"
-                    />
-                    <div className="big-discount-badge">SAVE {item.offpercentage}%</div>
-                  </div>
-                  
-                   
-                  <div className="best-deal-info big-deal-info">
-                  
-                  <div className='red-cover'>
-                    <h3 className="deal-title">{item.dealtitle}</h3>
-                    <p className="deal-description">{item.dealdescription}</p>
-                    <h4 className="deal-price">${item.dealprice}</h4>
-                    <p className="deal-product">Starting at</p>
-            
-                  </div>
-                  </div>
-                </>
-              ) : (
-                // Small Deal Structure
-                <>
-                  <div className="deal-left-side"></div>
-                  <div className="small-discount-badge">SAVE {item.offpercentage}%</div>
-                  <div
-                    className={`best-deal-info small-deal-info ${index === 1 ? 'first-small-deal' : ''}`}
-                    style={index === 1 ? { borderRadius: '10% 0 0 10%' } : {}}
-                  >
-                    <h3 className="deal-title">{item.dealtitle}</h3>
-                    <h4 className="deal-price">${item.dealprice}</h4>
-                    <p className="deal-product">Starting at</p>
-                  </div>
-                </>
-              )}
-            </div>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+  const sliderDesign = {
+    container: { 
+      backgroundColor: 'transparent', 
+      padding: '20px', 
+      borderRadius: '10px' 
+    },
+    title: { 
+      color: '#262626', 
+      fontSize: '2rem', 
+      fontWeight: '700' 
+    },
+    slide: {
+      margin: '10px', 
+      padding: '20px', 
+      borderRadius: '15px', 
+      display: 'flex', 
+      alignItems: 'left', 
+      paddingTop: '20px', 
+      flexDirection: 'row-reverse',
+    },
+    slideTitle: { 
+      fontWeight: 'bold', 
+      color: '#000', 
+      textTransform: 'uppercase', 
+      margin: '0', 
+      borderRadius: '30px', 
+      padding: '10px 0', 
+      textAlign: 'center',
+    },
+    slideImage: { 
+      width: '250px', 
+      height: '260px', 
+      borderRadius: '10px', 
+      marginLeft: '20px' 
+    },
+    slideInfo: {
+      marginTop: '40px', 
+    },
+    backgroundColorFirst: '#D43734', 
+    colorFirst: 'white', 
+    backgroundColorSecond: '#F8C400', 
+    colorSecond: 'black',
+  };
+  
+  // Determine responsive styles dynamically
+  const getSlideStyle = () => {
+    if (window.innerWidth < 768) {
+      // Mobile styles
+      return { display: 'block', flexDirection: 'column' };
+    }
+    // Default (desktop/tablet) styles
+    return sliderDesign.slide;
+  };
+  
+
+  return (
+    <div className="best-deals">
+      <div className="container mt-5">
+        <Slider
+          data={sliderData}
+          design={sliderDesign}
+          mobile={getSlideStyle}
+          slidesToShowSlide={2} 
+          title="Deals"
+        />
+      </div>
+    </div>
   );
 };
 

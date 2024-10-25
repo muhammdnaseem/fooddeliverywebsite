@@ -62,9 +62,13 @@
     }
   }
   .custom-navbar-bg {
-    background-color: #f8c400;
+    background-color: #D43734;
     height: auto;
     padding: 5px 0;
+}
+
+Button.franchise{
+  background-color: #f8c400;
 }
 
 /* Social Icons */

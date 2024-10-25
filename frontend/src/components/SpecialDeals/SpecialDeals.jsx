@@ -3,6 +3,7 @@ import './SpecialDeals.css';
 import { StoreContext } from '../context/StoreContext';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import BreadcrumbNav from '../BreadcrumbNav/BreadcrumbNav';
 
 const SpecialDeals = ({ limit }) => {
   const { deal_list = [], addToCart } = useContext(StoreContext);
@@ -23,8 +24,8 @@ const handleOrderNow = (item) => {
 
   return (
     <Container className="deals-showcase p-5">
-      <h2>Special Deals</h2>
-      <Row className="justify-content-center">
+       <BreadcrumbNav /> 
+      <Row className="justify-content-center mt-5">
         {dealsToDisplay.map((item, index) => (
           <Col
             key={item._id}

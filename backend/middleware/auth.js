@@ -2,10 +2,14 @@ import  jwt  from 'jsonwebtoken';
 
 const authMiddleware = async (req, res, next) =>{
     
-    const {token} = req.headers;
-    if(!token){
-        return res.json({success:false, message:'Not Authorized, login again'})
+    const authHeader = req.headers.authorization; // Use the correct header
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.json({ success: false, message: 'Not Authorized, login again' });
     }
+
+    const token = authHeader.split(' ')[1]; // Extract the token part
+    // console.log("Extracted Token:", token); // Log for debugging
 
     try {
         const token_decode = jwt.verify(token,process.env.JWT_SECRET);

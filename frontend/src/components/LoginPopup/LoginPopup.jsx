@@ -1,11 +1,14 @@
+
 import React, { useContext, useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets';
 import { StoreContext } from './../context/StoreContext';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const LoginPopup = ({ setShowLogin }) => {
-    const { url, setToken } = useContext(StoreContext);
+    const { loginUser, registerUser, forgotPassword, setToken } = useContext(StoreContext);
+
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const [currentState, setCurrentState] = useState('Login');
     const [data, setData] = useState({
@@ -24,55 +27,46 @@ const LoginPopup = ({ setShowLogin }) => {
 
     const onLogin = async (event) => {
         event.preventDefault();
-        let newUrl = url;
-
+        
         if (currentState === 'Login') {
-            newUrl += "/api/user/login";
+            // Call the loginUser function from context
+            await loginUser(data.email, data.password); // Call loginUser directly
+            // No need to handle response as loginUser already does it internally
+    
+        } else if (currentState === 'Sign Up') {
+            // Call the registerUser function from context
+            const userData = {
+                name: data.name,
+                email: data.email,
+                password: data.password,
+            };
+            await registerUser(userData); // Call registerUser directly
+            // No need to handle response as registerUser already does it internally
         } else if (currentState === 'Forgot Password') {
-            newUrl += "/api/user/forgotpassword";
-            const response = await axios.post(newUrl, { email: data.email });
-
-            if (response.data.success) {
+            // Handle Forgot Password logic
+            const response = await forgotPassword(data.email);
+            if (response.success) {
                 alert('Reset link sent to your email!');
                 setCurrentState('Login');
             } else {
-                alert(response.data.message || 'Something went wrong. Please try again.');
+                alert(response.message || 'Something went wrong. Please try again.');
             }
-            return;
+
         } else if (currentState === 'New Password') {
-            newUrl += "/api/user/resetpassword";
-            const response = await axios.post(newUrl, { newPassword: data.newPassword });
-            if (response.data.success) {
+            // Handle Reset Password logic
+            const response = await resetPassword(data.newPassword);
+            if (response.success) {
                 alert('Password reset successfully!');
                 setCurrentState('Login');
             } else {
-                alert(response.data.message || 'Something went wrong. Please try again.');
+                alert(response.message || 'Something went wrong. Please try again.');
             }
-            return;
-        } else {
-            newUrl += "/api/user/register";
-        }
-
-        const response = await axios.post(newUrl, data);
-
-        if (response.data.success) {
-            if (currentState === 'Login') {
-                setToken(response.data.token);
-                localStorage.setItem("token", response.data.token);
-                setShowLogin(false);
-            } else {
-                alert(response.data.message);
-                if (currentState === 'Forgot Password') {
-                    setCurrentState('New Password');
-                }
-            }
-        } else {
-            alert(response.data.message);
         }
     };
 
     const handleGoogleLogin = () => {
-        window.open(`${url}/api/user/auth/google`, '_self');
+        const googleLoginUrl = `http://localhost:4000/api/user/auth/google`;
+        window.open(googleLoginUrl, '_self');
     };
 
     return (
@@ -163,7 +157,7 @@ const LoginPopup = ({ setShowLogin }) => {
                                         value={data.otp}
                                         type="text"
                                         placeholder="Enter OTP"
-                                        required
+                                        
                                     />
                                     <input
                                         name="password"
@@ -226,7 +220,6 @@ const LoginPopup = ({ setShowLogin }) => {
 
                 <div className="login-popup-socials">
                     <img src={assets.google} alt="Google" onClick={handleGoogleLogin} />
-                   
                     <img src={assets.facebook} alt="Facebook" />
                 </div>
             </form>

@@ -4,46 +4,58 @@ const stripe = new Stripe("sk_test_51PE9CHP3pfdxJbgFpP1mpFToOgVBkHDh72zdVxgPTESl
 
 // Stripe Payment Handler
 const stripePayment = async (req, res) => {
-  const { productItems } = req.body;
+    const { productItems } = req.body;
 
-  try {
+    if (!Array.isArray(productItems) || productItems.length === 0) {
+        return res.status(400).json({ error: 'No products provided' });
+    }
+
+    // Ensure a minimum amount of ₩1000 for all products
     const lineItems = productItems.map((product) => {
-      const { unit_amount, currency, product_data } = product.price_data;
-      
-      // Set a minimum price of ₩660 for any product priced lower
-      const finalAmount = unit_amount < 660 ? 660 : unit_amount;
+        const { price_data, quantity } = product;
+        const finalAmount = Math.max(price_data.unit_amount, 1000); // ₩1000 minimum
 
-      if (!Number.isInteger(product.quantity) || product.quantity <= 0) {
-        throw new Error(`Invalid quantity for product ${product_data.name}.`);
-      }
-
-      return {
-        price_data: {
-          currency: currency,
-          product_data: product_data,
-          unit_amount: finalAmount,
-        },
-        quantity: product.quantity,
-      };
+        return {
+            price_data: {
+                currency: price_data.currency || 'krw',
+                product_data: price_data.product_data,
+                unit_amount: finalAmount,
+            },
+            quantity,
+        };
     });
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card', 'samsung_pay'],
-      line_items: lineItems,
-      mode: 'payment',
-      success_url: 'http://localhost:5173/success',
-      cancel_url: 'http://localhost:5173/my-cart',
-    });
+    try {
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: `${req.headers.origin}/order?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${req.headers.origin}/cancel`,
+        });
 
-    res.json({ id: session.id });
-  } catch (error) {
-    console.error('Error creating Stripe session:', error.message);
-    res.status(400).json({ error: error.message });
-  }
+        res.status(200).json({ id: session.id });
+    } catch (error) {
+        console.error('Error creating checkout session:', error);
+        res.status(500).json({ error: 'Failed to create checkout session' });
+    }
 };
 
+const verifyPayment = async (req, res) => {
+    const { session_id } = req.query; // Ensure the session ID is retrieved correctly
 
+    try {
+        const session = await stripe.checkout.sessions.retrieve(session_id);
 
+        if (session.payment_status === 'paid') {
+            res.status(200).json({ success: true, session });
+        } else {
+            res.status(200).json({ success: false, message: 'Payment not successful' });
+        }
+    } catch (error) {
+        console.error('Error verifying payment:', error.message);
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
 
-
-export { stripePayment };
+export { stripePayment, verifyPayment };

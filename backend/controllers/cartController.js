@@ -3,8 +3,6 @@ import userModel from './../models/userModel.js';
 const addToCart = async (req, res) => {
     try {
         const { userId, itemId, selectedSize } = req.body;
-
-        // Fetch the user's data
         let userData = await userModel.findById(userId);
 
         if (!userData) {
@@ -12,33 +10,31 @@ const addToCart = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Initialize cartData if it doesn't exist
         let cartData = userData.cartData || { items: {}, selectedSizes: {} };
 
-        // Validate input
         if (!itemId || !selectedSize) {
             console.error('Invalid itemId or selectedSize:', { itemId, selectedSize });
             return res.status(400).json({ success: false, message: 'Invalid itemId or selectedSize' });
         }
 
-        // Set or update the selected size for the item
+
         cartData.selectedSizes[itemId] = selectedSize;
 
-        // Ensure items property is initialized
+
         cartData.items = cartData.items || {};
 
-        // Ensure selectedSize has a valid identifier
-        const sizeId = selectedSize.id || selectedSize.name || selectedSize; // Modify this line
+  
+        const sizeId = selectedSize.id || selectedSize.name || selectedSize; 
         const itemKey = `${itemId}-${sizeId}`;
 
-        // Add or update the item quantity in the items object
+
         if (!cartData.items[itemKey]) {
-            cartData.items[itemKey] = 1; // If item doesn't exist, set quantity to 1
+            cartData.items[itemKey] = 1; 
         } else {
-            cartData.items[itemKey] += 1; // Increment quantity
+            cartData.items[itemKey] += 1; 
         }
 
-        // Update the user's cart in the database
+    
         await userModel.findByIdAndUpdate(userId, { cartData }, { new: true });
 
         res.json({ success: true, message: 'Added to cart' });
@@ -53,7 +49,7 @@ const addToCart = async (req, res) => {
 
 
 
-// remove items to user cart
+
 const removeFromCart = async (req, res) => {
     try {
         const { userId, itemId } = req.body;

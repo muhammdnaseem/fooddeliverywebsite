@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import { connectDB } from './config/db.js';
 import foodRouter from './routes/foodRoute.js';
 import dealRouter from './routes/dealRoute.js';
@@ -19,7 +20,13 @@ app.use(express.json());
 app.use(cors());
 
 // DB Connection
-connectDB();
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(console.log("Connected to MongoDB"))
+    .catch((err) => console.log("NOT CONNECTED TO NETWORK", err))
 
 // API Endpoints
 app.use("/api/food", foodRouter);
